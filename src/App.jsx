@@ -11,8 +11,8 @@ function App() {
       <BrowserRouter>
         <Navbar></Navbar>
         <Routes>
-          <Route path="/" component={Home}></Route>
-          <Route path="/users/:userId" component={User}></Route>
+          <Route exact path="/" element={<Home />}></Route>
+          <Route exact path="/users/:userId" element={<User />}></Route>
         </Routes>
       </BrowserRouter>
     </div>
