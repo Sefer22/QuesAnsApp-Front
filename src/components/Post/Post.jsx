@@ -9,12 +9,37 @@ function Post() {
     const [postList, setPostList] = useState([]);
 
     useEffect(() => {
-
+        fetch("https://localhost:8080/posts")
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    setIsLoaded(true);
+                    setPostList(result);
+                },
+                (error) => {
+                    setIsLoaded(true);
+                    setError(error);
+                }
+            )
     }, [])
 
-    return (
-        <div>Post</div>
-    )
+    if (error) {
+        return <div>Error!!!</div>
+    } else if (!isLoaded) {
+        return <div>Loading...</div>
+    } else {
+        return (
+            <ul>
+                {postList.map((post) => (
+                    <li>
+                        {post.title}
+                        {post.text}
+                    </li>
+                ))}
+            </ul>
+        );
+    }
+
 }
 
 export default Post
