@@ -6,7 +6,7 @@ import Post from './components/Post/Post.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <Post />
+    {/* <Post /> */}
     <App />
   </React.StrictMode>,
 )

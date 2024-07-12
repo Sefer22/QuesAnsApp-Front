@@ -9,7 +9,7 @@ function Post() {
     const [postList, setPostList] = useState([]);
 
     useEffect(() => {
-        fetch("https://localhost:8080/posts")
+        fetch("http://localhost:8080/posts")
             .then(res => res.json())
             .then(
                 (result) => {
