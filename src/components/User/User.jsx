@@ -6,7 +6,7 @@ function User() {
     const { userId } = useParams();
 
     return (
-        <div>User</div>
+        <div>User {userId}</div>
     )
 
 }
