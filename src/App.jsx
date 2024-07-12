@@ -6,8 +6,10 @@ function App() {
   return (
     <div>
       <BrowserRouter>
+        <NavBar></NavBar>
         <Switch>
-          <Route path="/" ></Route>
+          <Route path="/" component={Home}></Route>
+          <Route path="/users/:userId" component={User}></Route>
         </Switch>
       </BrowserRouter>
     </div>
