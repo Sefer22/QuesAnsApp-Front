@@ -58,7 +58,7 @@ const Post = (props) => {
                     <IconButton
                         onClick={handleLike}
                         aria-label="add to favorites">
-                        <FavoriteIcon style={{ color: 'red' }} />
+                        <FavoriteIcon style={liked ? { color: 'red' } : null} />
                     </IconButton>
                     <ExpandMore
                         expand={expanded}
