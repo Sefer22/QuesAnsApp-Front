@@ -26,10 +26,15 @@ const ExpandMore = styled((props) => <IconButton {...props} />)(({ theme, expand
 const Post = (props) => {
     const { title, text, userId, userName } = props;
     const [expanded, setExpanded] = useState(false);
+    const [liked, setLiked] = useState(false);
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
+
+    const handleLike = () => {
+        setLiked(!liked);
+    }
 
     return (
         <div className='postContainer'>
@@ -50,8 +55,10 @@ const Post = (props) => {
                     </Typography>
                 </CardContent>
                 <CardActions disableSpacing>
-                    <IconButton aria-label="add to favorites">
-                        <FavoriteIcon />
+                    <IconButton
+                        onClick={handleLike}
+                        aria-label="add to favorites">
+                        <FavoriteIcon style={{ color: 'red' }} />
                     </IconButton>
                     <ExpandMore
                         expand={expanded}
