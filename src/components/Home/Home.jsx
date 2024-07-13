@@ -32,30 +32,11 @@ function Home() {
     } else {
         return (
 
-            <Container fixed style={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'flex-start',
-                alignItems: 'center',
-                backgroundColor: '#cfe8fc',
-                height: '100vh',
-                padding: '20px'
-            }}>
+            <Container fixed style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#cfe8fc', height: '100vh' }}>
                 {postList.map((post) => (
-                    <Post
-                        key={post.id}
-                        title={post.title}
-                        text={post.text}
-                        style={{
-                            width: '80%',
-                            margin: '10px 0',
-                            padding: '20px',
-                            boxSizing: 'border-box',
-                            backgroundColor: '#fff',
-                            borderRadius: '8px',
-                            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'
-                        }}
-                    />
+                    <div style={{ marginBottom: '10px', width: '80%' }}>
+                        <Post key={post.id} title={post.title} text={post.text}></Post>
+                    </div>
                 ))}
             </Container>
         );
