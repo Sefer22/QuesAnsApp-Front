@@ -11,7 +11,7 @@ function Home() {
     const [isLoaded, setIsLoaded] = useState(false);
     const [postList, setPostList] = useState([]);
 
-    useEffect(() => {
+    const refreshPosts = () => {
         fetch("http://localhost:8080/posts")
             .then(res => res.json())
             .then(
@@ -24,7 +24,11 @@ function Home() {
                     setError(error);
                 }
             )
-    }, [])
+    }
+
+    useEffect(() => {
+        refreshPosts();
+    }, [postList])
 
     if (error) {
         return <div>Error!!!</div>
@@ -35,12 +39,15 @@ function Home() {
 
             <div fixed style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#f0f5ff' }}>
                 <div style={{ margin: '20px', width: '50%' }}>
-                    <PostForm userName={'Safar'} userId={1} title={'Title'} text={'text'} />
+                    <PostForm userName={'Safar'} userId={1}
+                        refreshPosts={refreshPosts}
+                    />
                 </div>
 
                 {postList.map((post) => (
                     <div style={{ margin: '20px', width: '50%' }}>
-                        <Post key={post.id} userId={post.userId} userName={post.userName} title={post.title} text={post.text}></Post>
+                        <Post key={post.id} userId={post.userId} userName={post.userName}
+                            title={post.title} text={post.text}></Post>
                     </div>
                 ))}
             </div>

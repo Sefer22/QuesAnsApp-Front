@@ -27,7 +27,7 @@ const ExpandMore = styled((props) => <IconButton {...props} />)(({ theme, expand
 }));
 
 const PostForm = (props) => {
-    const { userId, userName } = props;
+    const { userId, userName, refreshPosts } = props;
     const [expanded, setExpanded] = useState(false);
     const [text, setText] = useState("");
     const [title, setTitle] = useState("");
@@ -55,6 +55,7 @@ const PostForm = (props) => {
         if (loading) return;
         setLoading(true);
         savePost();
+        refreshPosts();
     }
     const handleTitle = (value) => {
         setTitle(value);
