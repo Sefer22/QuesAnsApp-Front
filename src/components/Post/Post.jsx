@@ -73,13 +73,12 @@ const Post = (props) => {
                 </CardActions>
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
                     <CardContent>
-                        {/* Genişletilmiş içeriği buraya ekleyin */}
+
                     </CardContent>
                 </Collapse>
             </Card>
-            {/* Burada title ve text'i kullanabilirsiniz, gerekliyse düzenleyin */}
-            {title}
-            {text}
+            {/* {title}
+            {text} */}
         </div>
     );
 };
