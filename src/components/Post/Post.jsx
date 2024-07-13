@@ -44,7 +44,7 @@ const Post = (props) => {
     }
 
     const refreshComments = () => {
-        fetch("http://localhost:8080/comments?postId" + postId)
+        fetch("http://localhost:8080/comments?postId=" + postId)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -52,6 +52,7 @@ const Post = (props) => {
                     setCommentList(result);
                 },
                 (error) => {
+                    console.log(error);
                     setIsLoaded(true);
                     setError(error);
                 }
@@ -59,11 +60,10 @@ const Post = (props) => {
     }
 
     useEffect(() => {
-        if (isInitialMount.current) {
+        if (isInitialMount.current)
             isInitialMount.current = false;
-        } else {
+        else
             refreshComments();
-        }
     }, [commentList])
 
     return (
@@ -101,10 +101,12 @@ const Post = (props) => {
                 </CardActions>
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
                     <Container fixed>
-                        {error ? "error" :
-                            isLoaded ? commentList.map(comment => (
-                                <Comment userId={1} userName={"USER"} text={comment.text}></Comment>
-                            )) : "Loading:"}
+                        {error ? "Error occurred" :
+                            isLoaded ? (
+                                Array.isArray(commentList) && commentList.map((comment) => (
+                                    <Comment key={comment.id} userId={1} userName={"USER"} text={comment.text}></Comment>
+                                ))
+                            ) : "Loading..."}
                     </Container>
                 </Collapse>
             </Card>

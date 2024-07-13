@@ -46,7 +46,7 @@ function Home() {
 
                 {postList.map((post) => (
                     <div style={{ margin: '20px', width: '50%' }}>
-                        <Post postId={post.id} key={post.id} userId={post.userId} userName={post.userName}
+                        <Post postId={post.id} userId={post.userId} userName={post.userName}
                             title={post.title} text={post.text}></Post>
                     </div>
                 ))}
