@@ -48,13 +48,16 @@ const PostForm = (props) => {
                             </Avatar>
                         </Link>
                     }
-                    title={<OutlinedInput id='outlined-adornment-amount' multiline placeholder='Title'>
+                    title={<OutlinedInput id='outlined-adornment-amount' multiline placeholder='Title'
+                        inputProps={{ maxLength: 25 }} fullWidth>
 
                     </OutlinedInput>}
                 />
                 <CardContent>
                     <Typography variant="body2" color="text.secondary">
-                        {text}
+                        {<OutlinedInput id='outlined-adornment-amount' multiline placeholder='Text'
+                            inputProps={{ maxLength: 250 }} fullWidth>
+                        </OutlinedInput>}
                     </Typography>
                 </CardContent>
                 <CardActions disableSpacing>

@@ -3,6 +3,7 @@ import Post from '../Post/Post'
 import { useState, useEffect } from 'react';
 import './Home.scss'
 import { Container } from '@mui/material';
+import PostForm from '../Post/PostForm';
 
 
 function Home() {
@@ -33,6 +34,10 @@ function Home() {
         return (
 
             <div fixed style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#f0f5ff' }}>
+                <div style={{ margin: '20px', width: '50%' }}>
+                    <PostForm userName={'Safar'} title={'Title'} text={'text'} />
+                </div>
+
                 {postList.map((post) => (
                     <div style={{ margin: '20px', width: '50%' }}>
                         <Post key={post.id} userId={post.userId} userName={post.userName} title={post.title} text={post.text}></Post>
