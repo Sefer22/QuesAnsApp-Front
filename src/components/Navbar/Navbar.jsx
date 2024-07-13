@@ -30,7 +30,7 @@ function Navbar() {
                         <Typography variant="h6">
                             <Link style={{ textDecoration: 'none', boxShadow: 'none', color: 'white' }} to={{ pathname: '/users' + userId }}>User</Link>
                         </Typography>
-                        <Link style={{ textDecoration: 'none', boxShadow: 'none', color: 'white' }} to={{ pathname: '/users/' + userId }}></Link>
+                        {/* <Link style={{ textDecoration: 'none', boxShadow: 'none', color: 'white' }} to={{ pathname: '/users/' + userId }}></Link> */}
                     </Toolbar>
                 </AppBar>
             </Box>

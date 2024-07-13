@@ -10,10 +10,8 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { MdInsertComment } from "react-icons/md";
+import { Link } from 'react-router-dom'
 
 const theme = createTheme();
 
@@ -26,7 +24,7 @@ const ExpandMore = styled((props) => <IconButton {...props} />)(({ theme, expand
 }));
 
 const Post = (props) => {
-    const { title, text } = props;
+    const { title, text, userId, userName } = props;
     const [expanded, setExpanded] = useState(false);
 
     const handleExpandClick = () => {
@@ -38,9 +36,11 @@ const Post = (props) => {
             <Card sx={{ maxWidth: 800, textAlign: 'left' }}>
                 <CardHeader
                     avatar={
-                        <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                            R
-                        </Avatar>
+                        <Link style={{ textDecoration: 'none', boxShadow: 'none', color: 'white' }} to={{ pathname: '/users' + userId }}>
+                            <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+                                {userName.charAt(0).toUpperCase()}
+                            </Avatar>
+                        </Link>
                     }
                     title={title}
                 />

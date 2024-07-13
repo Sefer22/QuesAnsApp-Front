@@ -35,7 +35,7 @@ function Home() {
             <Container fixed style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#cfe8fc', height: '100vh' }}>
                 {postList.map((post) => (
                     <div style={{ marginBottom: '10px', width: '80%' }}>
-                        <Post key={post.id} title={post.title} text={post.text}></Post>
+                        <Post key={post.id} userId={post.userId} userName={post.userName} title={post.title} text={post.text}></Post>
                     </div>
                 ))}
             </Container>
