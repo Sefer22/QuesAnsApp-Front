@@ -41,7 +41,7 @@ const Post = (props) => {
             <Card sx={{ maxWidth: 800, textAlign: 'left' }}>
                 <CardHeader
                     avatar={
-                        <Link style={{ textDecoration: 'none', boxShadow: 'none', color: 'white' }} to={{ pathname: '/users' + userId }}>
+                        <Link style={{ textDecoration: 'none', boxShadow: 'none', color: 'white' }} to={`/users/${userId}`}>
                             <Avatar sx={{ background: 'linear-gradient(45deg,#2196F3 30%,#21CBF3 90%)' }} aria-label="recipe">
                                 {userName.charAt(0).toUpperCase()}
                             </Avatar>

@@ -31,6 +31,7 @@ const PostForm = (props) => {
     const [expanded, setExpanded] = useState(false);
     const [text, setText] = useState("");
     const [title, setTitle] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const savePost = () => {
         fetch("http://localhost:8080/posts",
@@ -47,9 +48,12 @@ const PostForm = (props) => {
             })
             .then((res) => res.json())
             .catch((err) => console.log("error"))
+            .finally(() => setLoading(false));
     }
 
     const handleSubmit = () => {
+        if (loading) return;
+        setLoading(true);
         savePost();
     }
     const handleTitle = (value) => {
@@ -90,19 +94,17 @@ const PostForm = (props) => {
                                             background: 'linear-gradient(45deg,#2196F3 30%,#21CBF3 90%)',
                                             color: 'white'
                                         }}
-                                        onClick={handleSubmit()}
-                                    >Post</Button>
+                                        onClick={handleSubmit}
+                                        disabled={loading}
+                                    >
+                                        {loading ? 'Posting...' : 'Post'}
+                                    </Button>
                                 </InputAdornment>
                             }
                         >
                         </OutlinedInput>}
                     </Typography>
                 </CardContent>
-                <Collapse in={expanded} timeout="auto" unmountOnExit>
-                    <CardContent>
-
-                    </CardContent>
-                </Collapse>
             </Card>
             {/* {title}
             {text} */}
