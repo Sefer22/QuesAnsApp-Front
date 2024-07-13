@@ -42,7 +42,7 @@ const PostForm = (props) => {
                 body: JSON.stringify({
                     title: title,
                     userId: userId,
-                    text: text,
+                    text: text
                 }),
             })
             .then((res) => res.json())
@@ -50,7 +50,7 @@ const PostForm = (props) => {
     }
 
     const handleSubmit = () => {
-        console.log(title, text);
+        savePost();
     }
     const handleTitle = (value) => {
         setTitle(value);
