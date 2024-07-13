@@ -13,6 +13,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import { MdInsertComment } from "react-icons/md";
 import { Link } from 'react-router-dom'
 import { OutlinedInput } from '@mui/material';
+import Button from '@mui/material';
 
 const theme = createTheme();
 
@@ -56,7 +57,13 @@ const PostForm = (props) => {
                 <CardContent>
                     <Typography variant="body2" color="text.secondary">
                         {<OutlinedInput id='outlined-adornment-amount' multiline placeholder='Text'
-                            inputProps={{ maxLength: 250 }} fullWidth>
+                            inputProps={{ maxLength: 250 }} fullWidth
+                            endAdornment={
+                                <InputAdorment position='end'>
+                                    <Button></Button>
+                                </InputAdorment>
+                            }
+                        >
                         </OutlinedInput>}
                     </Typography>
                 </CardContent>
