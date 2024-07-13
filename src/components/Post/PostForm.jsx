@@ -3,23 +3,19 @@ import { styled, ThemeProvider, createTheme } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Collapse from '@mui/material/Collapse';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import { red } from '@mui/material/colors';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import { MdInsertComment } from "react-icons/md";
 import { Link } from 'react-router-dom'
 import { OutlinedInput } from '@mui/material';
 import { Button } from '@mui/material';
 import { InputAdornment } from '@mui/material';
+import { Snackbar } from '@mui/material';
+import Alert from '@mui/material/Alert';
 
 const theme = createTheme();
 
 const ExpandMore = styled((props) => <IconButton {...props} />)(({ theme, expand }) => ({
-    // transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
     marginLeft: 'auto',
     transition: theme.transitions.create('transform', {
         duration: theme.transitions.duration.shortest,
@@ -32,6 +28,7 @@ const PostForm = (props) => {
     const [text, setText] = useState("");
     const [title, setTitle] = useState("");
     const [loading, setLoading] = useState(false);
+    const [isSent, setIsSent] = useState(false);
 
     const savePost = () => {
         fetch("http://localhost:8080/posts",
@@ -47,6 +44,12 @@ const PostForm = (props) => {
                 }),
             })
             .then((res) => res.json())
+            .then(() => {
+                setIsSent(true);
+                setTitle("");
+                setText("");
+                refreshPosts();
+            })
             .catch((err) => console.log("error"))
             .finally(() => setLoading(false));
     }
@@ -55,22 +58,37 @@ const PostForm = (props) => {
         if (loading) return;
         setLoading(true);
         savePost();
-        refreshPosts();
     }
+
     const handleTitle = (value) => {
         setTitle(value);
+        setIsSent(false);
     }
 
     const handleText = (value) => {
         setText(value);
+        setIsSent(false);
     }
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setIsSent(false);
+    };
 
     return (
         <div className='postContainer'>
+            <Snackbar open={isSent} autoHideDuration={1200} onClose={handleClose}>
+                <Alert onClose={handleClose} severity='success'>
+                    Your message is sent!
+                </Alert>
+            </Snackbar>
+
             <Card sx={{ maxWidth: 800, textAlign: 'left' }}>
                 <CardHeader
                     avatar={
-                        <Link style={{ textDecoration: 'none', boxShadow: 'none', color: 'white' }} to={{ pathname: '/users' + userId }}>
+                        <Link style={{ textDecoration: 'none', boxShadow: 'none', color: 'white' }} to={`/users/${userId}`}>
                             <Avatar sx={{ background: 'linear-gradient(45deg,#2196F3 30%,#21CBF3 90%)' }} aria-label="recipe">
                                 {userName.charAt(0).toUpperCase()}
                             </Avatar>
@@ -78,15 +96,15 @@ const PostForm = (props) => {
                     }
                     title={<OutlinedInput id='outlined-adornment-amount' multiline placeholder='Title'
                         inputProps={{ maxLength: 25 }} fullWidth
+                        value={title}
                         onChange={(i) => handleTitle(i.target.value)}
-                    >
-
-                    </OutlinedInput>}
+                    />}
                 />
                 <CardContent>
                     <Typography variant="body2" color="text.secondary">
-                        {<OutlinedInput id='outlined-adornment-amount' multiline placeholder='Text'
+                        <OutlinedInput id='outlined-adornment-amount' multiline placeholder='Text'
                             inputProps={{ maxLength: 250 }} fullWidth
+                            value={text}
                             onChange={(i) => handleText(i.target.value)}
                             endAdornment={
                                 <InputAdornment position='end'>
@@ -102,13 +120,10 @@ const PostForm = (props) => {
                                     </Button>
                                 </InputAdornment>
                             }
-                        >
-                        </OutlinedInput>}
+                        />
                     </Typography>
                 </CardContent>
             </Card>
-            {/* {title}
-            {text} */}
         </div>
     );
 };
