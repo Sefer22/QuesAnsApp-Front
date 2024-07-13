@@ -42,7 +42,7 @@ const Post = (props) => {
                 <CardHeader
                     avatar={
                         <Link style={{ textDecoration: 'none', boxShadow: 'none', color: 'white' }} to={{ pathname: '/users' + userId }}>
-                            <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+                            <Avatar sx={{ background: 'linear-gradient(45deg,#2196F3 30%,#21CBF3 90%)' }} aria-label="recipe">
                                 {userName.charAt(0).toUpperCase()}
                             </Avatar>
                         </Link>

@@ -13,7 +13,8 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import { MdInsertComment } from "react-icons/md";
 import { Link } from 'react-router-dom'
 import { OutlinedInput } from '@mui/material';
-import Button from '@mui/material';
+import { Button } from '@mui/material';
+import { InputAdornment } from '@mui/material';
 
 const theme = createTheme();
 
@@ -26,16 +27,20 @@ const ExpandMore = styled((props) => <IconButton {...props} />)(({ theme, expand
 }));
 
 const PostForm = (props) => {
-    const { title, text, userId, userName } = props;
+    const { userId, userName } = props;
     const [expanded, setExpanded] = useState(false);
-    const [liked, setLiked] = useState(false);
+    const [text, setText] = useState("");
+    const [title, setTitle] = useState("");
 
-    const handleExpandClick = () => {
-        setExpanded(!expanded);
-    };
+    const handleSubmit = () => {
+        console.log(title, text);
+    }
+    const handleTitle = (value) => {
+        setTitle(value);
+    }
 
-    const handleLike = () => {
-        setLiked(!liked);
+    const handleText = (value) => {
+        setText(value);
     }
 
     return (
@@ -44,13 +49,15 @@ const PostForm = (props) => {
                 <CardHeader
                     avatar={
                         <Link style={{ textDecoration: 'none', boxShadow: 'none', color: 'white' }} to={{ pathname: '/users' + userId }}>
-                            <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+                            <Avatar sx={{ background: 'linear-gradient(45deg,#2196F3 30%,#21CBF3 90%)' }} aria-label="recipe">
                                 {userName.charAt(0).toUpperCase()}
                             </Avatar>
                         </Link>
                     }
                     title={<OutlinedInput id='outlined-adornment-amount' multiline placeholder='Title'
-                        inputProps={{ maxLength: 25 }} fullWidth>
+                        inputProps={{ maxLength: 25 }} fullWidth
+                        onChange={(i) => handleTitle(i.target.value)}
+                    >
 
                     </OutlinedInput>}
                 />
@@ -58,30 +65,22 @@ const PostForm = (props) => {
                     <Typography variant="body2" color="text.secondary">
                         {<OutlinedInput id='outlined-adornment-amount' multiline placeholder='Text'
                             inputProps={{ maxLength: 250 }} fullWidth
+                            onChange={(i) => handleText(i.target.value)}
                             endAdornment={
-                                <InputAdorment position='end'>
-                                    <Button></Button>
-                                </InputAdorment>
+                                <InputAdornment position='end'>
+                                    <Button variant='contained'
+                                        style={{
+                                            background: 'linear-gradient(45deg,#2196F3 30%,#21CBF3 90%)',
+                                            color: 'white'
+                                        }}
+                                        onClick={handleSubmit()}
+                                    >Post</Button>
+                                </InputAdornment>
                             }
                         >
                         </OutlinedInput>}
                     </Typography>
                 </CardContent>
-                <CardActions disableSpacing>
-                    <IconButton
-                        onClick={handleLike}
-                        aria-label="add to favorites">
-                        <FavoriteIcon style={liked ? { color: 'red' } : null} />
-                    </IconButton>
-                    <ExpandMore
-                        expand={expanded}
-                        onClick={handleExpandClick}
-                        aria-expanded={expanded}
-                        aria-label="show more"
-                    >
-                        <MdInsertComment />
-                    </ExpandMore>
-                </CardActions>
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
                     <CardContent>
 
