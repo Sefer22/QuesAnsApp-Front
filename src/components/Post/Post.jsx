@@ -12,6 +12,7 @@ import { red } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { MdInsertComment } from "react-icons/md";
 import { Link } from 'react-router-dom'
+import { Container } from '@mui/material';
 
 const theme = createTheme();
 
@@ -99,12 +100,15 @@ const Post = (props) => {
                     </ExpandMore>
                 </CardActions>
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
-                    <CardContent>
-
-                    </CardContent>
+                    <Container fixed>
+                        {error ? "error" :
+                            isLoaded ? commentList.map(comment => (
+                                <Comment userId={1} userName={"USER"} text={comment.text}></Comment>
+                            )) : "Loading:"}
+                    </Container>
                 </Collapse>
             </Card>
-            {/* {title}
+            {/* {title}0
             {text} */}
         </div>
     );
