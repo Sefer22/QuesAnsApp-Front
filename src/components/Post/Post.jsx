@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './Post.scss';
 import { styled, ThemeProvider, createTheme } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
