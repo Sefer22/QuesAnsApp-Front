@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { styled, ThemeProvider, createTheme } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -24,17 +24,46 @@ const ExpandMore = styled((props) => <IconButton {...props} />)(({ theme, expand
 }));
 
 const Post = (props) => {
-    const { title, text, userId, userName } = props;
+    const { title, text, userId, userName, postId } = props;
     const [expanded, setExpanded] = useState(false);
     const [liked, setLiked] = useState(false);
+    const [error, setError] = useState(null);
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [commentList, setCommentList] = useState([]);
+    const isInitialMount = useRef(true);
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
+        refreshComments();
+        console.log(commentList);
     };
 
     const handleLike = () => {
         setLiked(!liked);
     }
+
+    const refreshComments = () => {
+        fetch("http://localhost:8080/comments?postId" + postId)
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    setIsLoaded(true);
+                    setCommentList(result);
+                },
+                (error) => {
+                    setIsLoaded(true);
+                    setError(error);
+                }
+            )
+    }
+
+    useEffect(() => {
+        if (isInitialMount.current) {
+            isInitialMount.current = false;
+        } else {
+            refreshComments();
+        }
+    }, [commentList])
 
     return (
         <div className='postContainer'>
