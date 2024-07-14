@@ -109,7 +109,7 @@ const Post = (props) => {
                                     <UserComment userId={1} userName={"USER"} text={comment.text}></UserComment>
                                 ))
                             ) : "Loading..."}
-                        <UserCommentForm userId={1} userName={"USER"} text={'text'}></UserCommentForm>
+                        <UserCommentForm userId={1} userName={"USER"} postId={postId}></UserCommentForm>
                     </Container>
                 </Collapse>
             </Card>

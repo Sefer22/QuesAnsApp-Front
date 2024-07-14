@@ -15,10 +15,32 @@ const StyledAvatar = styled(Avatar)(({ theme }) => ({
 }));
 
 function UserCommentForm(props) {
-    const { text, userId, userName } = props;
+    const { userId, userName, postId } = props;
+    const [text, setText] = useState("");
+
+    const saveComment = () => {
+        fetch("http://localhost:8080/comments",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    postId: postId,
+                    userId: userId,
+                    text: text
+                }),
+            })
+            .then((res) => res.json())
+            .catch((err) => console.log(err))
+    }
 
     const handleSubmit = () => {
-
+        saveComment();
+        saveText("");
+    }
+    const handleChange = (value) => {
+        setText(value);
     }
 
     return (
@@ -28,6 +50,7 @@ function UserCommentForm(props) {
                 multiline
                 inputProps={{ maxLength: 250 }}
                 fullWidth
+                onChange={(i) => handleChange(i.target.value)}
                 startAdornment={
                     <InputAdornment position='start'>
                         <StyledLink to={`/users/${userId}`}>
@@ -49,7 +72,8 @@ function UserCommentForm(props) {
                         </Button>
                     </InputAdornment>
                 }
-            />
+                value={text}
+            ></OutlinedInput>
         </CardContent>
     );
 }
