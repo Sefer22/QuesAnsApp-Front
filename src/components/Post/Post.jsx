@@ -8,7 +8,6 @@ import Collapse from '@mui/material/Collapse';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import { red } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { MdInsertComment } from "react-icons/md";
 import { Link } from 'react-router-dom'
@@ -34,7 +33,7 @@ const Post = (props) => {
     const [isLoaded, setIsLoaded] = useState(false);
     const [commentList, setCommentList] = useState([]);
     const isInitialMount = useRef(true);
-    const likeCount = likes.length;
+    const [likeCount, setLikeCount] = useState(likes.length);
     const [isLiked, setIsLiked] = useState(false);
 
     const handleExpandClick = () => {
@@ -45,6 +44,11 @@ const Post = (props) => {
 
     const handleLike = () => {
         setIsLiked(!isLiked);
+        if (!isLiked) {
+            setLikeCount(likeCount + 1);
+        } else {
+            setLikeCount(likeCount - 1);
+        }
     }
 
     const refreshComments = () => {
