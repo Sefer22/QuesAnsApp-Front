@@ -27,13 +27,14 @@ const ExpandMore = styled((props) => <IconButton {...props} />)(({ theme, expand
 }));
 
 const Post = (props) => {
-    const { title, text, userId, userName, postId } = props;
+    const { title, text, userId, userName, postId, likes } = props;
     const [expanded, setExpanded] = useState(false);
     const [liked, setLiked] = useState(false);
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [commentList, setCommentList] = useState([]);
     const isInitialMount = useRef(true);
+    const likeCount = likes.length;
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
@@ -91,6 +92,7 @@ const Post = (props) => {
                         onClick={handleLike}
                         aria-label="add to favorites">
                         <FavoriteIcon style={liked ? { color: 'red' } : null} />
+                        {likeCount}
                     </IconButton>
                     <ExpandMore
                         expand={expanded}
