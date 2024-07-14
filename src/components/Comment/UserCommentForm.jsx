@@ -23,7 +23,6 @@ function UserCommentForm(props) {
                 multiline
                 inputProps={{ maxLength: 25 }}
                 fullWidth
-                value={text}
                 startAdornment={
                     <InputAdornment position='start'>
                         <StyledLink to={`/users/${userId}`}>
