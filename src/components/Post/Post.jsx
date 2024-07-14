@@ -13,6 +13,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import { MdInsertComment } from "react-icons/md";
 import { Link } from 'react-router-dom'
 import { Container } from '@mui/material';
+import UserComment from '../Comment/UserComment';
 
 const theme = createTheme();
 
@@ -104,7 +105,7 @@ const Post = (props) => {
                         {error ? "Error occurred" :
                             isLoaded ? (
                                 Array.isArray(commentList) && commentList.map((comment) => (
-                                    <Comment key={comment.id} userId={1} userName={"USER"} text={comment.text}></Comment>
+                                    <UserComment key={comment.id} userId={1} userName={"USER"} text={comment.text}></UserComment>
                                 ))
                             ) : "Loading..."}
                     </Container>
