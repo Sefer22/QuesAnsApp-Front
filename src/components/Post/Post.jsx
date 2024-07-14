@@ -35,6 +35,7 @@ const Post = (props) => {
     const [commentList, setCommentList] = useState([]);
     const isInitialMount = useRef(true);
     const likeCount = likes.length;
+    const [isLiked, setIsLiked] = useState(false);
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
@@ -43,7 +44,7 @@ const Post = (props) => {
     };
 
     const handleLike = () => {
-        setLiked(!liked);
+        setIsLiked(!isLiked);
     }
 
     const refreshComments = () => {
@@ -62,12 +63,20 @@ const Post = (props) => {
             )
     }
 
+    const checkLikes = () => {
+        var likeControl = likes.find((like) => like.userId === userId);
+        if (likeControl != null)
+            setIsLiked(true);
+    }
+
     useEffect(() => {
         if (isInitialMount.current)
             isInitialMount.current = false;
         else
             refreshComments();
     }, [commentList])
+
+    useEffect(() => { checkLikes() }, [])
 
     return (
         <div className='postContainer'>
@@ -91,8 +100,10 @@ const Post = (props) => {
                     <IconButton
                         onClick={handleLike}
                         aria-label="add to favorites">
-                        <FavoriteIcon style={liked ? { color: 'red' } : null} />
-                        {likeCount}
+                        <FavoriteIcon style={isLiked ? { color: 'red' } : null} />
+                        <IconButton>
+                            {likeCount}
+                        </IconButton>
                     </IconButton>
                     <ExpandMore
                         expand={expanded}
