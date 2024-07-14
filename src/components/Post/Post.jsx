@@ -14,6 +14,7 @@ import { MdInsertComment } from "react-icons/md";
 import { Link } from 'react-router-dom'
 import { Container } from '@mui/material';
 import UserComment from '../Comment/UserComment';
+import UserCommentForm from '../Comment/UserComment';
 
 const theme = createTheme();
 
@@ -108,6 +109,7 @@ const Post = (props) => {
                                     <UserComment key={comment.id} userId={1} userName={"USER"} text={comment.text}></UserComment>
                                 ))
                             ) : "Loading..."}
+                        <UserCommentForm key={comment.id} userId={1} userName={"USER"} text={"text"}></UserCommentForm>
                     </Container>
                 </Collapse>
             </Card>
