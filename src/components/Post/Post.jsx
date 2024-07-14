@@ -35,6 +35,7 @@ const Post = (props) => {
     const isInitialMount = useRef(true);
     const [likeCount, setLikeCount] = useState(likes.length);
     const [isLiked, setIsLiked] = useState(false);
+    const [likeId, setLikeId] = useState(null);
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
@@ -45,8 +46,10 @@ const Post = (props) => {
     const handleLike = () => {
         setIsLiked(!isLiked);
         if (!isLiked) {
+            saveLikes();
             setLikeCount(likeCount + 1);
         } else {
+            deleteLike();
             setLikeCount(likeCount - 1);
         }
     }
@@ -67,10 +70,38 @@ const Post = (props) => {
             )
     }
 
+    const saveLikes = () => {
+        fetch("http://localhost:8080/likes",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    userId: userId,
+                    postId: postId
+                }),
+            })
+            .then((res) => res.json())
+            .catch((err) => console.log(err))
+    }
+
+    const deleteLike = () => {
+        var likeId = likes.find((like => like.userId === userId)).id;
+        fetch("http://localhost:8080/likes/" + likeId,
+            {
+                method: "DELETE",
+            })
+            .catch((err) => console.log(err))
+    }
+
     const checkLikes = () => {
         var likeControl = likes.find((like) => like.userId === userId);
-        if (likeControl != null)
+        if (likeControl != null) {
+            setLikeId(likeControl.id);
+            console.log(likeId);
             setIsLiked(true);
+        }
     }
 
     useEffect(() => {
