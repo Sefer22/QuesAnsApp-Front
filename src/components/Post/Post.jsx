@@ -87,7 +87,7 @@ const Post = (props) => {
     }
 
     const deleteLike = () => {
-        var likeId = likes.find((like => like.userId === userId)).id;
+        // var likeId = likes.find((like => like.userId === userId)).id;
         fetch("http://localhost:8080/likes/" + likeId,
             {
                 method: "DELETE",
@@ -99,8 +99,8 @@ const Post = (props) => {
         var likeControl = likes.find((like) => like.userId === userId);
         if (likeControl != null) {
             setLikeId(likeControl.id);
-            console.log(likeId);
             setIsLiked(true);
+            console.log(likeId);
         }
     }
 
