@@ -1,8 +1,16 @@
 import React from 'react'
+import { FormControl } from '@mui/material'
+import { Input } from '@mui/material'
+import { InputLabel } from '@mui/material'
 
 function Auth() {
     return (
-        <div>Auth</div>
+        <FormControl>
+            <InputLabel>Username</InputLabel>
+            <Input />
+            <InputLabel>Password</InputLabel>
+            <Input />
+        </FormControl>
     )
 }
 
