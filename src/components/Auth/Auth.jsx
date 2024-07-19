@@ -8,8 +8,8 @@ function Auth() {
         <FormControl>
             <InputLabel>Username</InputLabel>
             <Input />
-            <InputLabel>Password</InputLabel>
-            <Input />
+            <InputLabel style={{ top: 80 }}>Password</InputLabel>
+            <Input style={{ top: 40 }} />
         </FormControl>
     )
 }
