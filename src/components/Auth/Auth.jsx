@@ -16,6 +16,14 @@ function Auth() {
         setPassword(value);
     }
 
+    const handleRegister = () => {
+
+    }
+
+    const handleLogin = () => {
+
+    }
+
     return (
         <FormControl>
             <InputLabel>Username</InputLabel>
@@ -30,6 +38,7 @@ function Auth() {
                     background: 'linear-gradient(45deg,#2196F3 30%,#21cbf3 90%)',
                     color: 'white'
                 }}
+                onClick={handleRegister}
             >Register</Button>
             <FormHelperText style={{ margin: 20 }}>Are you already registered?</FormHelperText>
             <Button variant="contained"
@@ -37,6 +46,7 @@ function Auth() {
                     background: 'linear-gradient(45deg,#2196F3 30%,#21cbf3 90%)',
                     color: 'white'
                 }}
+                onClick={handleLogin}
             >Login</Button>
         </FormControl>
     )
