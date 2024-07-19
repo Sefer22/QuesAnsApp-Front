@@ -1,7 +1,7 @@
 import React from 'react'
 import { FormControl } from '@mui/material'
 import { Input } from '@mui/material'
-import { InputLabel, Button } from '@mui/material'
+import { InputLabel, Button, FormHelperText } from '@mui/material'
 
 function Auth() {
     return (
@@ -17,6 +17,13 @@ function Auth() {
                     color: 'white'
                 }}
             >Register</Button>
+            <FormHelperText style={{ margin: 20 }}>Are you already registered?</FormHelperText>
+            <Button variant="contained"
+                style={{
+                    background: 'linear-gradient(45deg,#2196F3 30%,#21cbf3 90%)',
+                    color: 'white'
+                }}
+            >Login</Button>
         </FormControl>
     )
 }
