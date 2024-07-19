@@ -16,12 +16,32 @@ function Auth() {
         setPassword(value);
     }
 
-    const handleRegister = () => {
+    const sendRequest = (path) => {
+        fetch("/auth" + path, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                userName: username,
+                password: password,
+            }),
+        })
+            .then((res) = res.json())
+            .then((result) = result)
+            .catch((err) = console.log(err))
+    }
 
+    const handleRegister = () => {
+        sendRequest("register")
+        setUsername("")
+        setPassword("")
     }
 
     const handleLogin = () => {
-
+        sendRequest("login")
+        setUsername("")
+        setPassword("")
     }
 
     return (
