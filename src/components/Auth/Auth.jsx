@@ -1,15 +1,29 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FormControl } from '@mui/material'
 import { Input } from '@mui/material'
 import { InputLabel, Button, FormHelperText } from '@mui/material'
 
 function Auth() {
+
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+
+    const handleUsername = (value) => {
+        setUsername(value);
+    }
+
+    const handlePassword = (value) => {
+        setPassword(value);
+    }
+
     return (
         <FormControl>
             <InputLabel>Username</InputLabel>
-            <Input />
+            <Input onChange={(i) = handleUsername(i.target.value)} />
             <InputLabel style={{ top: 80 }}>Password</InputLabel>
-            <Input style={{ top: 40 }} />
+            <Input style={{ top: 40 }}
+                onChange={(i) => handlePassword(i.target.value)}
+            />
             <Button variant="contained"
                 style={{
                     marginTop: 60,
