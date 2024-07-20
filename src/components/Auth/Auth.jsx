@@ -16,8 +16,8 @@ function Auth() {
         setPassword(value);
     }
 
-    const sendRequest = (path) => {
-        fetch("/auth/" + path, {
+    const sendRequest = async (path) => {
+        await fetch("http://localhost:8080/auth/" + path, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -27,15 +27,20 @@ function Auth() {
                 password: password,
             }),
         })
-            .then((res) = res.json())
-            .then((result) = result)
-            .catch((err) = console.log(err))
+            .then((res) => res.json())
+            .then((result) => {
+                localStorage.setItem("tokenKey", result.message);
+                localStorage.setItem("currentUser", result.userId);
+                localStorage.setItem("userName", username)
+            })
+            .catch((err) => console.log(err))
     }
 
     const handleRegister = () => {
         sendRequest("register")
         setUsername("")
         setPassword("")
+        history.go("/auth")
     }
 
     const handleLogin = () => {
@@ -45,9 +50,9 @@ function Auth() {
     }
 
     return (
-        <FormControl>
+        <FormControl style={{ marginTop: '15px' }}>
             <InputLabel>Username</InputLabel>
-            <Input onChange={(i) = handleUsername(i.target.value)} />
+            <Input onChange={(i) => handleUsername(i.target.value)} />
             <InputLabel style={{ top: 80 }}>Password</InputLabel>
             <Input style={{ top: 40 }}
                 onChange={(i) => handlePassword(i.target.value)}
