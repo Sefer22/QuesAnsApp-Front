@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -9,6 +9,16 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 
 function Navbar() {
+
+    let history = useHistory();
+
+    const onClick = () => {
+        localStorage.removeItem("tokenKey")
+        localStorage.removeItem("currenUser")
+        localStorage.removeItem("userName")
+        history.go(0)
+    }
+
     return (
         <div>
             <Box sx={{ flexGrow: 1 }}>
@@ -28,7 +38,7 @@ function Navbar() {
                         </Typography>
                         <Typography variant="h6">
                             {localStorage.getItem("currentUser") == null ? <Link to="/auth"></Link> :
-                                <div><IconButton><LockOpen></LockOpen></IconButton>
+                                <div><IconButton onClick={onClick}><LockOpen></LockOpen></IconButton>
                                     <Link style={{ textDecoration: 'none', boxShadow: 'none', color: 'white' }} to={{ pathname: '/users' + localStorage.getItem("currentUser") }}>Login/Register</Link>
                                 </div>}
                         </Typography>
