@@ -9,7 +9,6 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 
 function Navbar() {
-    let userId = 5;
     return (
         <div>
             <Box sx={{ flexGrow: 1 }}>
@@ -28,7 +27,10 @@ function Navbar() {
                             <Link style={{ textDecoration: 'none', boxShadow: 'none', color: 'white' }} to="/">Home</Link>
                         </Typography>
                         <Typography variant="h6">
-                            <Link style={{ textDecoration: 'none', boxShadow: 'none', color: 'white' }} to={{ pathname: '/users' + userId }}>User</Link>
+                            {localStorage.getItem("currentUser") == null ? <Link to="/auth"></Link> :
+                                <div><IconButton><LockOpen></LockOpen></IconButton>
+                                    <Link style={{ textDecoration: 'none', boxShadow: 'none', color: 'white' }} to={{ pathname: '/users' + localStorage.getItem("currentUser") }}>Login/Register</Link>
+                                </div>}
                         </Typography>
                         {/* <Link style={{ textDecoration: 'none', boxShadow: 'none', color: 'white' }} to={{ pathname: '/users/' + userId }}></Link> */}
                     </Toolbar>
