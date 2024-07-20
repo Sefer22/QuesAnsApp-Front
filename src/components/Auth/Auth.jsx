@@ -36,17 +36,11 @@ function Auth() {
             .catch((err) => console.log(err))
     }
 
-    const handleRegister = () => {
-        sendRequest("register")
+    const handleButton = (path) => {
+        sendRequest(path)
         setUsername("")
         setPassword("")
         history.go("/auth")
-    }
-
-    const handleLogin = () => {
-        sendRequest("login")
-        setUsername("")
-        setPassword("")
     }
 
     return (
@@ -55,7 +49,7 @@ function Auth() {
             <Input onChange={(i) => handleUsername(i.target.value)} />
             <InputLabel style={{ top: 80 }}>Password</InputLabel>
             <Input style={{ top: 40 }}
-                onChange={(i) => handlePassword(i.target.value)}
+                onChange={(i) => handlePashsword(i.target.value)}
             />
             <Button variant="contained"
                 style={{
@@ -63,7 +57,7 @@ function Auth() {
                     background: 'linear-gradient(45deg,#2196F3 30%,#21cbf3 90%)',
                     color: 'white'
                 }}
-                onClick={handleRegister}
+                onClick={() => handleButton("register")}
             >Register</Button>
             <FormHelperText style={{ margin: 20 }}>Are you already registered?</FormHelperText>
             <Button variant="contained"
@@ -71,7 +65,7 @@ function Auth() {
                     background: 'linear-gradient(45deg,#2196F3 30%,#21cbf3 90%)',
                     color: 'white'
                 }}
-                onClick={handleLogin}
+                onClick={() => handleButton("login")}
             >Login</Button>
         </FormControl>
     )
