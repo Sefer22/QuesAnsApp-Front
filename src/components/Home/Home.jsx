@@ -39,9 +39,9 @@ function Home() {
 
             <div fixed style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#f0f5ff' }}>
                 <div style={{ margin: '20px', width: '50%' }}>
-                    <PostForm userName={'Safar'} userId={1}
+                    {localStorage.getItem("currentUser") == null ? "" : <PostForm userName={localStorage.getItem("userName")} userId={localStorage.getItem("currentUser")}
                         refreshPosts={refreshPosts}
-                    />
+                    />}
                 </div>
 
                 {postList.map((post) => (
