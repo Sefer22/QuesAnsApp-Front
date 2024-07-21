@@ -76,6 +76,7 @@ const Post = (props) => {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": localStorage.getItem("tokenKey")
             },
             body: JSON.stringify({
                 userId: localStorage.getItem("currentUser"),
@@ -92,6 +93,9 @@ const Post = (props) => {
     const deleteLike = () => {
         fetch("http://localhost:8080/likes/" + likeId, {
             method: "DELETE",
+            headers: {
+                "Authorization": localStorage.getItem("tokenKey")
+            },
         })
             .catch((err) => console.log(err))
     }
