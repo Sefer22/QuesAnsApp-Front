@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
-import { FormControl } from '@mui/material'
+import { Box, FormControl } from '@mui/material'
 import { Input } from '@mui/material'
 import { InputLabel, Button, FormHelperText } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 
 function Auth() {
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    let navigate = useNavigate();
 
     const handleUsername = (value) => {
         setUsername(value);
@@ -40,17 +42,19 @@ function Auth() {
         sendRequest(path)
         setUsername("")
         setPassword("")
-        history.go("/auth")
+        navigate("/auth")
     }
 
     return (
-        <FormControl style={{ marginTop: '15px' }}>
-            <InputLabel>Username</InputLabel>
-            <Input onChange={(i) => handleUsername(i.target.value)} />
-            <InputLabel style={{ top: 80 }}>Password</InputLabel>
-            <Input style={{ top: 40 }}
-                onChange={(i) => handlePashsword(i.target.value)}
-            />
+        <Box display="flex" flexDirection="column" alignItems="center" style={{ marginTop: '15px' }}>
+            <FormControl margin="normal" fullWidth>
+                <InputLabel>Username</InputLabel>
+                <Input value={username} onChange={(i) => handleUsername(i.target.value)} />
+            </FormControl>
+            <FormControl margin="normal" fullWidth>
+                <InputLabel>Password</InputLabel>
+                <Input type="password" value={password} onChange={(i) => handlePassword(i.target.value)} />
+            </FormControl>
             <Button variant="contained"
                 style={{
                     marginTop: 60,
@@ -67,7 +71,7 @@ function Auth() {
                 }}
                 onClick={() => handleButton("login")}
             >Login</Button>
-        </FormControl>
+        </Box>
     )
 }
 

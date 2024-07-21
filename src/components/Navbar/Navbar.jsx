@@ -7,6 +7,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import { CiLogout } from "react-icons/ci";
 
 function Navbar() {
 
@@ -39,7 +40,7 @@ function Navbar() {
                         </Typography>
                         <Typography variant="h6">
                             {localStorage.getItem("currentUser") == null ? <Link to="/auth">Login/Register</Link> :
-                                <div><IconButton style={{ color: '#fff', textDecoration: 'none', boxShadow: 'none' }} onClick={onClick}><LockOpenIcon></LockOpenIcon></IconButton>
+                                <div><IconButton style={{ color: '#fff', textDecoration: 'none', boxShadow: 'none' }} onClick={onClick}><CiLogout /></IconButton>
                                     <Link to={{ pathname: '/users/' + localStorage.getItem("currentUser") }}>Profile</Link>
                                 </div>}
                         </Typography>
