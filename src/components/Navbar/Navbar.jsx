@@ -12,11 +12,12 @@ function Navbar() {
 
     let navigate = useNavigate();
 
+
     const onClick = () => {
         localStorage.removeItem("tokenKey")
         localStorage.removeItem("currentUser")
         localStorage.removeItem("userName")
-        navigate("")
+        navigate(0);
     }
 
     return (
@@ -37,9 +38,9 @@ function Navbar() {
                             <Link style={{ textDecoration: 'none', boxShadow: 'none', color: 'white' }} to="/">Home</Link>
                         </Typography>
                         <Typography variant="h6">
-                            {localStorage.getItem("currentUser") == null ? <Link to="/auth"></Link> :
-                                <div><IconButton onClick={onClick}><LockOpenIcon></LockOpenIcon></IconButton>
-                                    <Link style={{ textDecoration: 'none', boxShadow: 'none', color: 'white' }} to={{ pathname: '/users' + localStorage.getItem("currentUser") }}>Login/Register</Link>
+                            {localStorage.getItem("currentUser") == null ? <Link to="/auth">Login/Register</Link> :
+                                <div><IconButton style={{ color: '#fff', textDecoration: 'none', boxShadow: 'none' }} onClick={onClick}><LockOpenIcon></LockOpenIcon></IconButton>
+                                    <Link to={{ pathname: '/users/' + localStorage.getItem("currentUser") }}>Profile</Link>
                                 </div>}
                         </Typography>
                         {/* <Link style={{ textDecoration: 'none', boxShadow: 'none', color: 'white' }} to={{ pathname: '/users/' + userId }}></Link> */}
