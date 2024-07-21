@@ -39,6 +39,10 @@ const Post = (props) => {
 
     const disabled = localStorage.getItem("currentUser") == null;
 
+    const setCommentRefresh = () => {
+        setRefresh(true);
+    }
+
     const handleExpandClick = () => {
         setExpanded(!expanded);
         refreshComments();
@@ -162,7 +166,7 @@ const Post = (props) => {
                                     <UserComment key={comment.id} userId={comment.userId} userName={comment.userName} text={comment.text} />
                                 ))
                             ) : "Loading..."}
-                        {disabled ? "" : <UserCommentForm userId={userId} userName={userName} postId={postId} />}
+                        {disabled ? "" : <UserCommentForm userId={localStorage.getItem("currentUser")} userName={localStorage.getItem("userName")} postId={postId} setCommentRefresh={setCommentRefresh} />}
                     </Container>
                 </Collapse>
             </Card>
