@@ -16,7 +16,7 @@ function Navbar() {
         localStorage.removeItem("tokenKey")
         localStorage.removeItem("currentUser")
         localStorage.removeItem("userName")
-        navigate("auth")
+        navigate("")
     }
 
     return (
