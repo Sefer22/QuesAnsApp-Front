@@ -14,7 +14,7 @@ const StyledAvatar = styled(Avatar)(({ theme }) => ({
 }));
 
 function UserComment(props) {
-    const { text, userId, userName } = props;
+    const { text, userId, userName = "" } = props;  // Default value for userName
 
     return (
         <CardContent>
@@ -22,14 +22,14 @@ function UserComment(props) {
                 disabled
                 id='outlined-adornment-amount'
                 multiline
-                inputProps={{ maxLength: 25 }}
+                inputProps={{ maxLength: 250 }}
                 fullWidth
                 value={text}
                 startAdornment={
                     <InputAdornment position='start'>
                         <StyledLink to={`/users/${userId}`}>
                             <StyledAvatar aria-label="recipe">
-                                {userName.charAt(0).toUpperCase()}
+                                {userName && userName.charAt(0).toUpperCase()}
                             </StyledAvatar>
                         </StyledLink>
                     </InputAdornment>

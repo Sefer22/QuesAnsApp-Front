@@ -105,7 +105,7 @@ const Post = (props) => {
     }
 
     const checkLikes = () => {
-        var likeControl = likes.find((like) => like.userId === localStorage.getItem("currentUser"));
+        var likeControl = likes.find((like) => "" + like.userId === localStorage.getItem("currentUser"));
         if (likeControl != null) {
             setLikeId(likeControl.id);
             setIsLiked(true);
@@ -129,7 +129,7 @@ const Post = (props) => {
                     avatar={
                         <Link style={{ textDecoration: 'none', boxShadow: 'none', color: 'white' }} to={`/users/${userId}`}>
                             <Avatar sx={{ background: 'linear-gradient(45deg,#2196F3 30%,#21CBF3 90%)' }} aria-label="recipe">
-                                {userName.charAt(0).toUpperCase()}
+                                {userName && userName.charAt(0).toUpperCase()}
                             </Avatar>
                         </Link>
                     }
@@ -163,7 +163,7 @@ const Post = (props) => {
                         {error ? "Error occurred" :
                             isLoaded ? (
                                 Array.isArray(commentList) && commentList.map((comment) => (
-                                    <UserComment key={comment.id} userId={comment.userId} userName={comment.userName} text={comment.text} />
+                                    <UserComment key={comment.id} userId={comment.userId} userName={comment.userName || ""} text={comment.text} />
                                 ))
                             ) : "Loading..."}
                         {disabled ? "" : <UserCommentForm userId={localStorage.getItem("currentUser")} userName={localStorage.getItem("userName")} postId={postId} setCommentRefresh={setCommentRefresh} />}
