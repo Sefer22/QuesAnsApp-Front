@@ -13,12 +13,15 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Radio from '@mui/material/Checkbox';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import MaterialAvatar from '@mui/material/Avatar';
 
-function Avatar() {
+function UserAvatar() {
 
     const [open, setOpen] = useState(false);
-    const [checked, setChecked] = React.useState([1]);
+    const [selectedValue, setSelectedValue] = useState(1);
 
     const handleOpen = () => {
         setOpen(true);
@@ -27,17 +30,8 @@ function Avatar() {
         setOpen(false);
     }
 
-    const handleToggle = (value) => () => {
-        const currentIndex = checked.indexOf(value);
-        const newChecked = [...checked];
-
-        if (currentIndex === -1) {
-            newChecked.push(value);
-        } else {
-            newChecked.splice(currentIndex, 1);
-        }
-
-        setChecked(newChecked);
+    const handleChange = (event) => {
+        setSelectedValue(parseInt(event.target.value));
     };
 
     const style = {
@@ -57,7 +51,7 @@ function Avatar() {
             <Card sx={{ maxWidth: 345 }}>
                 <CardMedia
                     sx={{ height: 300 }}
-                    image="/avatars/avatar0.png"
+                    image={`/avatars/${selectedValue}.png`}
                     title="User Avatar"
                 />
                 <CardContent>
@@ -80,33 +74,34 @@ function Avatar() {
             >
                 <Box sx={style}>
                     <List dense sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-                        {[1, 2, 3, 4, 5, 6].map((value) => {
-                            const labelId = `checkbox-list-secondary-label-${value}`;
-                            return (
-                                <ListItem
-                                    key={value}
-                                    secondaryAction={
-                                        <Radio
-                                            edge="end"
-                                            onChange={handleToggle(value)}
-                                            checked={checked.indexOf(value) !== -1}
-                                            inputProps={{ 'aria-labelledby': labelId }}
-                                        />
-                                    }
-                                    disablePadding
-                                >
-                                    <ListItemButton>
-                                        <ListItemAvatar>
-                                            <Avatar
-                                                alt={`Avatar n°${value}`}
-                                                src={`/avatars/${value}.png`}
+                        <RadioGroup
+                            aria-labelledby="avatar-radio-group-label"
+                            name="avatar-radio-group"
+                            value={selectedValue}
+                            onChange={handleChange}
+                        >
+                            {[1, 2, 3, 4, 5, 6].map((value) => {
+                                const labelId = `radio-list-label-${value}`;
+                                return (
+                                    <ListItem key={value} disablePadding>
+                                        <ListItemButton>
+                                            <ListItemAvatar>
+                                                <MaterialAvatar
+                                                    alt={`Avatar n°${value}`}
+                                                    src={`/avatars/${value}.png`}
+                                                />
+                                            </ListItemAvatar>
+                                            <ListItemText id={labelId} primary={`Avatar ${value}`} />
+                                            <FormControlLabel
+                                                value={value}
+                                                control={<Radio />}
+                                                label=""
                                             />
-                                        </ListItemAvatar>
-                                        <ListItemText id={labelId} primary={`Line item ${value}`} />
-                                    </ListItemButton>
-                                </ListItem>
-                            );
-                        })}
+                                        </ListItemButton>
+                                    </ListItem>
+                                );
+                            })}
+                        </RadioGroup>
                     </List>
                 </Box>
             </Modal>
@@ -114,4 +109,4 @@ function Avatar() {
     )
 }
 
-export default Avatar
+export default UserAvatar;

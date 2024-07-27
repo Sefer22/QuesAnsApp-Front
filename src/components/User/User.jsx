@@ -1,6 +1,6 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import Avatar from '../Avatar/Avatar';
+import UserAvatar from '../Avatar/UserAvatar';
 
 function User() {
 
@@ -8,7 +8,7 @@ function User() {
 
     return (
         <div>User {userId}
-            <Avatar />
+            <UserAvatar />
         </div>
     )
 
