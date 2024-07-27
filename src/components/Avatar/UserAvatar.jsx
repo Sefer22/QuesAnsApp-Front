@@ -21,7 +21,7 @@ import MaterialAvatar from '@mui/material/Avatar';
 function UserAvatar() {
 
     const [open, setOpen] = useState(false);
-    const [selectedValue, setSelectedValue] = useState(1);
+    const [selectedValue, setSelectedValue] = useState(0);
 
     const handleOpen = () => {
         setOpen(true);
@@ -51,7 +51,7 @@ function UserAvatar() {
             <Card sx={{ maxWidth: 345 }}>
                 <CardMedia
                     sx={{ height: 300 }}
-                    image={`/avatars/${selectedValue}.png`}
+                    image={`/avatars/avatar${selectedValue}.png`}
                     title="User Avatar"
                 />
                 <CardContent>
@@ -80,7 +80,7 @@ function UserAvatar() {
                             value={selectedValue}
                             onChange={handleChange}
                         >
-                            {[1, 2, 3, 4, 5, 6].map((value) => {
+                            {[0, 1, 2, 3, 4, 5, 6].map((value) => {
                                 const labelId = `radio-list-label-${value}`;
                                 return (
                                     <ListItem key={value} disablePadding>
@@ -88,7 +88,7 @@ function UserAvatar() {
                                             <ListItemAvatar>
                                                 <MaterialAvatar
                                                     alt={`Avatar n°${value}`}
-                                                    src={`/avatars/${value}.png`}
+                                                    src={`/avatars/avatar${value}.png`}
                                                 />
                                             </ListItemAvatar>
                                             <ListItemText id={labelId} primary={`Avatar ${value}`} />
