@@ -20,7 +20,7 @@ function AvatarComponent() {
     const [selectedValue, setSelectedValue] = useState(0);
 
     const handleChange = (event) => {
-        setSelectedValue(parseInt(event.target.value, 10));
+        setSelectedValue(event.target.value);
     }
 
     const handleOpen = () => {
@@ -37,7 +37,7 @@ function AvatarComponent() {
                 <CardMedia
                     sx={{ height: 280 }}
                     alt="User Avatar"
-                    image={`/avatars/avatar/${selectedValue}.jpg`}
+                    image={`/avatars/avatar/${selectedValue}.png`}
                     title="User Avatar"
                 />
                 <CardContent>
