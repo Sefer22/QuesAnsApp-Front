@@ -6,10 +6,19 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { useState } from 'react';
+import Box from '@mui/material/Box';
+import Modal from '@mui/material/Modal';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import Radio from '@mui/material/Checkbox';
 
 function Avatar() {
 
     const [open, setOpen] = useState(false);
+    const [checked, setChecked] = React.useState([1]);
 
     const handleOpen = () => {
         setOpen(true);
@@ -17,6 +26,31 @@ function Avatar() {
     const handleClose = () => {
         setOpen(false);
     }
+
+    const handleToggle = (value) => () => {
+        const currentIndex = checked.indexOf(value);
+        const newChecked = [...checked];
+
+        if (currentIndex === -1) {
+            newChecked.push(value);
+        } else {
+            newChecked.splice(currentIndex, 1);
+        }
+
+        setChecked(newChecked);
+    };
+
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 400,
+        bgcolor: 'background.paper',
+        border: '2px solid #000',
+        boxShadow: 24,
+        p: 4,
+    };
 
     return (
         <div>
@@ -35,10 +69,9 @@ function Avatar() {
                     </Typography>
                 </CardContent>
                 <CardActions>
-                    <Button size="small">Change Avatar</Button>
+                    <Button size="small" onClick={handleOpen}>Change Avatar</Button>
                 </CardActions>
             </Card>
-            <Button onClick={handleOpen}>Open modal</Button>
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -46,12 +79,35 @@ function Avatar() {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <Typography id="modal-modal-title" variant="h6" component="h2">
-                        Hello
-                    </Typography>
-                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                        Welcome!!
-                    </Typography>
+                    <List dense sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+                        {[1, 2, 3, 4, 5, 6].map((value) => {
+                            const labelId = `checkbox-list-secondary-label-${value}`;
+                            return (
+                                <ListItem
+                                    key={value}
+                                    secondaryAction={
+                                        <Radio
+                                            edge="end"
+                                            onChange={handleToggle(value)}
+                                            checked={checked.indexOf(value) !== -1}
+                                            inputProps={{ 'aria-labelledby': labelId }}
+                                        />
+                                    }
+                                    disablePadding
+                                >
+                                    <ListItemButton>
+                                        <ListItemAvatar>
+                                            <Avatar
+                                                alt={`Avatar n°${value}`}
+                                                src={`/avatars/${value}.png`}
+                                            />
+                                        </ListItemAvatar>
+                                        <ListItemText id={labelId} primary={`Line item ${value}`} />
+                                    </ListItemButton>
+                                </ListItem>
+                            );
+                        })}
+                    </List>
                 </Box>
             </Modal>
         </div>
