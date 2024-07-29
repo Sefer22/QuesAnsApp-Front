@@ -18,10 +18,11 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import MaterialAvatar from '@mui/material/Avatar';
 
-function UserAvatar() {
+function UserAvatar(props) {
 
+    const { avatarId } = props;
     const [open, setOpen] = useState(false);
-    const [selectedValue, setSelectedValue] = useState(0);
+    const [selectedValue, setSelectedValue] = useState(avatarId);
 
     const handleOpen = () => {
         setOpen(true);
