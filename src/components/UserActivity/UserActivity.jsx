@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -7,6 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
+import { BiSolidCommentError } from 'react-icons/bi';
 
 const columns = [
 
@@ -19,9 +20,30 @@ const columns = [
     },
 ];
 
-function createData(name, code, population, size) {
-    const density = population / size;
-    return { name, code, population, size, density };
+const [error, setError] = useState(null);
+const [isLoaded, setIsLoaded] = useState(false);
+const [activityList, setActivityList] = useState([]);
+
+const getActivity = () => {
+    fetch("http://localhost:8080/users/activity" + userId, {
+        method: "GET",
+        headers: {
+            "Content-Type": "Application/json",
+            "Authorization": localStroage.getItem("tokenKey"),
+        },
+    })
+        .then(res => res.json())
+        .then(
+            (result) => {
+                setIsLoaded(true);
+                setActivityList(result);
+            },
+            (error) => {
+                console.log(error)
+                setIsLoaded(true);
+                BiSolidCommentError(error)
+            }
+        )
 }
 
 
