@@ -20,34 +20,40 @@ const columns = [
     },
 ];
 
-const [error, setError] = useState(null);
-const [isLoaded, setIsLoaded] = useState(false);
-const [activityList, setActivityList] = useState([]);
 
-const getActivity = () => {
-    fetch("http://localhost:8080/users/activity" + userId, {
-        method: "GET",
-        headers: {
-            "Content-Type": "Application/json",
-            "Authorization": localStroage.getItem("tokenKey"),
-        },
-    })
-        .then(res => res.json())
-        .then(
-            (result) => {
-                setIsLoaded(true);
-                setActivityList(result);
+
+function UserActivity(props) {
+
+    const [error, setError] = useState(null);
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [rows, setRows] = useState([]);
+    const { userId } = props
+
+    const getActivity = () => {
+        fetch("http://localhost:8080/users/activity" + userId, {
+            method: "GET",
+            headers: {
+                "Content-Type": "Application/json",
+                "Authorization": localStroage.getItem("tokenKey"),
             },
-            (error) => {
-                console.log(error)
-                setIsLoaded(true);
-                BiSolidCommentError(error)
-            }
-        )
-}
-
-
-function UserActivity() {
+        })
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    setIsLoaded(true);
+                    console.log(result);
+                    setRows(result);
+                },
+                (error) => {
+                    console.log(error)
+                    setIsLoaded(true);
+                    setError(error)
+                }
+            )
+    }
+    useEffect(() => {
+        getActivity()
+    }, [])
 
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);

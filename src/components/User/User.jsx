@@ -11,7 +11,7 @@ function User() {
     return (
         <div style={{ display: 'flex' }}>
             <UserAvatar avatarId={0} />
-            <UserActivity />
+            <UserActivity userId={userId} />
         </div>
     )
 
