@@ -9,7 +9,7 @@ function User() {
     const { userId } = useParams();
 
     return (
-        <div>
+        <div style={{ display: 'flex' }}>
             <UserAvatar avatarId={0} />
             <UserActivity />
         </div>
