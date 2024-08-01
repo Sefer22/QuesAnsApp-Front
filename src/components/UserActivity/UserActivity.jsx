@@ -90,42 +90,25 @@ function UserActivity(props) {
     };
 
     const getActivity = () => {
-        fetch(`http://localhost:8080/users/activity/${userId}`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "Application/json",
-                "Authorization": localStorage.getItem("tokenKey"),
-            },
-        })
+        GetWithAuth("/users/activity/" + userId)
             .then(res => res.json())
             .then(
                 (result) => {
                     setIsLoaded(true);
                     console.log(result);
-                    setRows(result);
+                    setRows(result)
                 },
                 (error) => {
                     console.log(error)
                     setIsLoaded(true);
-                    setError(error)
+                    setError(error);
                 }
             )
     }
+
     useEffect(() => {
         getActivity()
     }, [])
-
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
-    const handleChangePage = (event, newPage) => {
-        setPage(newPage);
-    };
-
-    const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(+event.target.value);
-        setPage(0);
-    };
 
     return (
         <div>
