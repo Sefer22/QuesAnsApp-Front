@@ -21,60 +21,56 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 
-const columns = [
-
-    {
-        id: 'User Activity',
-        label: 'User Activity',
-        minWidth: 170,
-        align: 'left',
-        format: (value) => value.toLocaleString('en-US'),
-    },
-];
-
 function PopUp() {
-    const [open, setOpen] = React.useState(false);
+    const { isOpen, postId, setIsOpen } = props;
+    const [open, setOpen] = useState(isOpen);
+    const [post, setPost] = useState();
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
+
+    const getPost = () => {
+        GetWithAuth("/posts/" + postId)
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    console.log(result);
+                    setPost(result);
+                },
+                (error) => {
+                    console.log(error)
+                }
+            )
+    }
 
     const handleClose = () => {
         setOpen(false);
+        setIsOpen(false);
     };
+
+
+    useEffect(() => {
+        setOpen(isOpen);
+    }, [isOpen]);
+
+    useEffect(() => {
+        getPost();
+    }, [postId])
     return (
-        <React.Fragment>
-            <Button variant="outlined" onClick={handleClickOpen}>
-                Open full-screen dialog
-            </Button>
-            <Dialog
-                fullScreen
-                open={open}
-                onClose={handleClose}
-                TransitionComponent={Transition}
-            >
-                <AppBar sx={{ position: 'relative' }}>
-                    <Toolbar>
-                        <IconButton
-                            edge="start"
-                            color="inherit"
-                            onClick={handleClose}
-                            aria-label="close"
-                        >
-                            <CloseIcon />
-                        </IconButton>
-                        <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-                            Sound
-                        </Typography>
-                        <Button autoFocus color="inherit" onClick={handleClose}>
-                            save
-                        </Button>
-                    </Toolbar>
-                </AppBar>
-                <Post></Post>
-            </Dialog>
-        </React.Fragment>
-    );
+        <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
+            <AppBar className={classes.appBar}>
+                <Toolbar>
+                    <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
+                        <CloseIcon />
+                    </IconButton>
+                    <Typography variant="h6" className={classes.title}>
+                        Close
+                    </Typography>
+                </Toolbar>
+            </AppBar>
+            {post ? <Post likes={post.postLikes} postId={post.id} userId={post.userId} userName={post.userName}
+                title={post.title} text={post.text}></Post> : "loading"}
+        </Dialog>
+    )
+
 }
 
 
@@ -84,11 +80,14 @@ function UserActivity(props) {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [rows, setRows] = useState([]);
-    const { userId } = props
+    const { userId } = props;
+    const [isOpen, setIsOpen] = useState();
+    const [selectedPost, setSelectedPost] = useState();
 
     const handleNotification = (postId) => {
-
-    }
+        setSelectedPost(postId);
+        setIsOpen(true);
+    };
 
     const getActivity = () => {
         fetch(`http://localhost:8080/users/activity/${userId}`, {

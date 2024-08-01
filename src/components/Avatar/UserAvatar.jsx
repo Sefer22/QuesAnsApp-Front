@@ -26,13 +26,13 @@ function UserAvatar(props) {
 
     const saveAvatar = () => {
         fetch("http://localhost:8080/users/" + localStorage.getItem("currentUser"), {
-            method: "POST",
+            method: "PUT",
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": localStorage.getItem("tokenKey"),
             },
             body: JSON.stringify({
-                avatar: avatarId,
+                avatar: selectedValue,
             }),
         })
             .then((res) => res.json())
@@ -44,6 +44,7 @@ function UserAvatar(props) {
     }
     const handleClose = () => {
         setOpen(false);
+        saveAvatar();
     }
 
     const handleChange = (event) => {
