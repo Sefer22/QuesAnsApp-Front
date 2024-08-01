@@ -28,9 +28,15 @@ function UserAvatar(props) {
         fetch("http://localhost:8080/users/" + localStorage.getItem("currentUser"), {
             method: "POST",
             headers: {
-                "Content-Type"
-            }
+                "Content-Type": "application/json",
+                "Authorization": localStorage.getItem("tokenKey"),
+            },
+            body: JSON.stringify({
+                avatar: avatarId,
+            }),
         })
+            .then((res) => res.json())
+            .catch((err) => console.log(err))
     }
 
     const handleOpen = () => {
