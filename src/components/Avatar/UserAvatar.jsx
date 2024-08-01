@@ -24,6 +24,15 @@ function UserAvatar(props) {
     const [open, setOpen] = useState(false);
     const [selectedValue, setSelectedValue] = useState(avatarId);
 
+    const saveAvatar = () => {
+        fetch("http://localhost:8080/users/" + localStorage.getItem("currentUser"), {
+            method: "POST",
+            headers: {
+                "Content-Type"
+            }
+        })
+    }
+
     const handleOpen = () => {
         setOpen(true);
     }
