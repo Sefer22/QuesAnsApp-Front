@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { CardContent, Avatar, InputAdornment, OutlinedInput } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Button } from '@mui/material';
+import { PostWithAuth } from '../services/HttpService';
 
 const StyledLink = styled(Link)(({ theme }) => ({
     textDecoration: 'none',
@@ -19,19 +20,11 @@ function UserCommentForm(props) {
     const [text, setText] = useState("");
 
     const saveComment = () => {
-        fetch("http://localhost:8080/comments",
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": localStorage.getItem("tokenKey")
-                },
-                body: JSON.stringify({
-                    postId: postId,
-                    userId: userId,
-                    text: text
-                }),
-            })
+        PostWithAuth("http://localhost:8080/comments", {
+            postId: postId,
+            userId: userId,
+            text: text
+        })
             .then((res) => res.json())
             .catch((err) => console.log(err))
     }
