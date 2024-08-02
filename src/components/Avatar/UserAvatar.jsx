@@ -16,6 +16,7 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import MaterialAvatar from '@mui/material/Avatar';
+import { PutWithAuth } from '../services/HttpService';
 
 function UserAvatar(props) {
     const { avatarId } = props;
@@ -23,15 +24,8 @@ function UserAvatar(props) {
     const [selectedValue, setSelectedValue] = useState(avatarId);
 
     const saveAvatar = () => {
-        fetch("http://localhost:8080/users/" + localStorage.getItem("currentUser"), {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": localStorage.getItem("tokenKey"),
-            },
-            body: JSON.stringify({
-                avatar: selectedValue,
-            }),
+        PutWithAuth("http://localhost:8080/users/" + localStorage.getItem("currentUser"), {
+            avatar: selectedValue,
         })
             .then((res) => res.json())
             .catch((err) => console.log(err));
