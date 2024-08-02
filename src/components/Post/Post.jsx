@@ -37,6 +37,7 @@ const Post = (props) => {
     const [likeCount, setLikeCount] = useState(likes.length);
     const [isLiked, setIsLiked] = useState(false);
     const [likeId, setLikeId] = useState(null);
+    const [refresh, setRefresh] = useState(false);
 
     const disabled = localStorage.getItem("currentUser") == null;
 
@@ -107,12 +108,12 @@ const Post = (props) => {
     }
 
     useEffect(() => {
-        if (!isInitialMount.current) {
-            refreshComments();
-        } else {
+        if (isInitialMount.current) {
             isInitialMount.current = false;
+        } else {
+            refreshComments();
         }
-    }, [commentList])
+    }, [])
 
     useEffect(() => { checkLikes() }, [])
 
