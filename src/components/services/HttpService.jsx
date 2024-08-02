@@ -8,4 +8,6 @@ export const PostWithAuth = (url, body) => {
         },
         body: JSON.stringify(body),
     })
+
+    return request
 }

@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom';
 import { Container } from '@mui/material';
 import UserComment from '../Comment/UserComment';
 import UserCommentForm from '../Comment/UserCommentForm';
+import { PostWithAuth } from '../services/HttpService';
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
@@ -76,16 +77,9 @@ const Post = (props) => {
     }
 
     const saveLikes = () => {
-        fetch("http://localhost:8080/likes", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": localStorage.getItem("tokenKey")
-            },
-            body: JSON.stringify({
-                userId: localStorage.getItem("currentUser"),
-                postId: postId
-            }),
+        PostWithAuth("/likes", {
+            userId: localStorage.getItem("currentUser"),
+            postId: postId
         })
             .then((res) => res.json())
             .then((result) => {
