@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -15,21 +15,19 @@ import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
 import { GetWithAuth } from '../../services/HttpService';
-
+import Post from '../Post/Post';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-
-function PopUp() {
+function PopUp(props) {
     const { isOpen, postId, setIsOpen } = props;
     const [open, setOpen] = useState(isOpen);
-    const [post, setPost] = useState();
-
+    const [post, setPost] = useState(null);
 
     const getPost = () => {
-        GetWithAuth("/posts/" + postId)
+        GetWithAuth("http://localhost:8080/posts/" + postId)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -37,24 +35,26 @@ function PopUp() {
                     setPost(result);
                 },
                 (error) => {
-                    console.log(error)
+                    console.log(error);
                 }
-            )
-    }
+            );
+    };
 
     const handleClose = () => {
         setOpen(false);
         setIsOpen(false);
     };
 
-
     useEffect(() => {
         setOpen(isOpen);
     }, [isOpen]);
 
     useEffect(() => {
-        getPost();
-    }, [postId])
+        if (postId) {
+            getPost();
+        }
+    }, [postId]);
+
     return (
         <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
             <AppBar>
@@ -69,23 +69,19 @@ function PopUp() {
             </AppBar>
             {
                 post ? <Post likes={post.postLikes} postId={post.id} userId={post.userId} userName={post.userName}
-                    title={post.title} text={post.text}></Post> : "loading"
+                    title={post.title} text={post.text} /> : "loading"
             }
-        </Dialog >
-    )
-
+        </Dialog>
+    );
 }
 
-
-
 function UserActivity(props) {
-
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [rows, setRows] = useState([]);
     const { userId } = props;
-    const [isOpen, setIsOpen] = useState();
-    const [selectedPost, setSelectedPost] = useState();
+    const [isOpen, setIsOpen] = useState(false);
+    const [selectedPost, setSelectedPost] = useState(null);
 
     const handleNotification = (postId) => {
         setSelectedPost(postId);
@@ -93,49 +89,46 @@ function UserActivity(props) {
     };
 
     const getActivity = () => {
-        GetWithAuth("/users/activity/" + userId)
+        GetWithAuth("http://localhost:8080/users/activity/" + userId)
             .then(res => res.json())
             .then(
                 (result) => {
                     setIsLoaded(true);
                     console.log(result);
-                    setRows(result)
+                    setRows(result);
                 },
                 (error) => {
-                    console.log(error)
+                    console.log(error);
                     setIsLoaded(true);
                     setError(error);
                 }
-            )
-    }
-
+            );
+    };
     useEffect(() => {
-        getActivity()
-    }, [])
+        getActivity();
+    }, []);
 
     return (
         <div>
-            {isOpen ? <PopUp isOpen={isOpen} postId={selectedPost} setIsOpen={setIsOpen} /> : ""}
+            {isOpen && <PopUp isOpen={isOpen} postId={selectedPost} setIsOpen={setIsOpen} />}
             <Paper>
                 <TableContainer>
                     <Table stickyHeader aria-label="sticky table">
                         <TableHead>
                             <TableRow>
-                                User Activity
+                                <TableCell>User Activity</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {rows.map((row) => {
-                                return (
-                                    <Button onClick={() => handleNotification(row[1])}>
-                                        <TableRow hover role="checkbox" tabIndex={-1} key={row.code} >
-                                            <TableCell align="right">
-                                                {row[3] + " " + row[0] + " your post"}
-                                            </TableCell>
-                                        </TableRow>
-                                    </Button>
-                                );
-                            })}
+                            {rows.map((row, index) => (
+                                <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                                    <TableCell align="right">
+                                        <Button onClick={() => handleNotification(row[1])}>
+                                            {row[3] + " " + row[0] + " your post"}
+                                        </Button>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
                         </TableBody>
                     </Table>
                 </TableContainer>
@@ -144,4 +137,4 @@ function UserActivity(props) {
     );
 }
 
-export default UserActivity
+export default UserActivity;
