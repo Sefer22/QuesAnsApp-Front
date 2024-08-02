@@ -20,7 +20,7 @@ function Auth() {
     }
 
     const sendRequest = async (path) => {
-        PostWithAuth("http://localhost:8080/auth/" + path, {
+        PostWithoutAuth("http://localhost:8080/auth/" + path, {
             userName: username,
             password: password,
         })

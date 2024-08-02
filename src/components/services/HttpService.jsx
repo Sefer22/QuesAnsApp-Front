@@ -12,6 +12,19 @@ export const PostWithAuth = (url, body) => {
     return request
 }
 
+export const PostWithoutAuth = (url, body) => {
+
+    var request = fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+    })
+
+    return request
+}
+
 export const PutWithAuth = (url, body) => {
 
     var request = fetch(url, {
