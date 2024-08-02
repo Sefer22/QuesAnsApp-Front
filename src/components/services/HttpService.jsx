@@ -29,7 +29,20 @@ export const PutWithAuth = (url, body) => {
 export const GetWithAuth = (url) => {
 
     var request = fetch(url, {
-        method: "POST",
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": localStorage.getItem("tokenKey"),
+        },
+    })
+
+    return request
+}
+
+export const DeleteWithAuth = (url) => {
+
+    var request = fetch(url, {
+        method: "DELETE",
         headers: {
             "Content-Type": "application/json",
             "Authorization": localStorage.getItem("tokenKey"),

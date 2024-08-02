@@ -77,7 +77,7 @@ const Post = (props) => {
     }
 
     const saveLikes = () => {
-        PostWithAuth("/likes", {
+        PostWithAuth("http://localhost:8080/likes", {
             userId: localStorage.getItem("currentUser"),
             postId: postId
         })
