@@ -1,11 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { useState } from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import List from '@mui/material/List';
@@ -19,7 +18,6 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import MaterialAvatar from '@mui/material/Avatar';
 
 function UserAvatar(props) {
-
     const { avatarId } = props;
     const [open, setOpen] = useState(false);
     const [selectedValue, setSelectedValue] = useState(avatarId);
@@ -36,16 +34,16 @@ function UserAvatar(props) {
             }),
         })
             .then((res) => res.json())
-            .catch((err) => console.log(err))
-    }
+            .catch((err) => console.log(err));
+    };
 
     const handleOpen = () => {
         setOpen(true);
-    }
+    };
     const handleClose = () => {
         setOpen(false);
         saveAvatar();
-    }
+    };
 
     const handleChange = (event) => {
         setSelectedValue(parseInt(event.target.value));
@@ -123,7 +121,7 @@ function UserAvatar(props) {
                 </Box>
             </Modal>
         </div>
-    )
+    );
 }
 
 export default UserAvatar;
