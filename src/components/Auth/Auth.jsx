@@ -3,6 +3,7 @@ import { Box, FormControl } from '@mui/material'
 import { Input } from '@mui/material'
 import { InputLabel, Button, FormHelperText } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
+import { PostWithAuth } from '../services/HttpService'
 
 function Auth() {
 
@@ -19,15 +20,9 @@ function Auth() {
     }
 
     const sendRequest = async (path) => {
-        await fetch("http://localhost:8080/auth/" + path, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                userName: username,
-                password: password,
-            }),
+        PostWithAuth("http://localhost:8080/auth/" + path, {
+            userName: username,
+            password: password,
         })
             .then((res) => res.json())
             .then((result) => {
