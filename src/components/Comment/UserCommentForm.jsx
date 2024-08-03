@@ -16,7 +16,7 @@ const StyledAvatar = styled(Avatar)(({ theme }) => ({
 }));
 
 function UserCommentForm(props) {
-    const { userId, userName, postId } = props;
+    const { userId, userName, postId, setCommentRefresh } = props;
     const [text, setText] = useState("");
 
     const saveComment = () => {
@@ -32,6 +32,7 @@ function UserCommentForm(props) {
     const handleSubmit = () => {
         saveComment();
         setText("");
+        setCommentRefresh();
     }
     const handleChange = (value) => {
         setText(value);

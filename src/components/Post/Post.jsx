@@ -75,6 +75,7 @@ const Post = (props) => {
                     setError(error);
                 }
             )
+        setRefresh(false)
     }
 
     const saveLikes = () => {
@@ -113,7 +114,7 @@ const Post = (props) => {
         } else {
             refreshComments();
         }
-    }, [])
+    }, [refresh])
 
     useEffect(() => { checkLikes() }, [])
 
