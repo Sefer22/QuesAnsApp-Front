@@ -19,7 +19,7 @@ import MaterialAvatar from '@mui/material/Avatar';
 import { PutWithAuth } from '../services/HttpService';
 
 function UserAvatar(props) {
-    const { avatarId } = props;
+    const { avatarId, userId, userName } = props;
     const [open, setOpen] = useState(false);
     const [selectedValue, setSelectedValue] = useState(avatarId);
 
@@ -65,13 +65,14 @@ function UserAvatar(props) {
                 />
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="div">
-                        Username
+                        {userName}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
                         User Info
                     </Typography>
                 </CardContent>
                 <CardActions>
+                    {localStorage.getItem("currentUser") == userId ? <Button size="small" onClick={handleOpen}>Change Avatar</Button> : ""}
                     <Button size="small" onClick={handleOpen}>Change Avatar</Button>
                 </CardActions>
             </Card>
