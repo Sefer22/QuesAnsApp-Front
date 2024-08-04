@@ -67,10 +67,7 @@ function PopUp(props) {
                     </Typography>
                 </Toolbar>
             </AppBar>
-            {
-                post ? <Post likes={post.postLikes} postId={post.id} userId={post.userId} userName={post.userName}
-                    title={post.title} text={post.text} /> : "loading"
-            }
+            {post ? <Post likes={post.postLikes} postId={post.id} userId={post.userId} userName={post.userName} title={post.title} text={post.text} /> : "loading"}
         </Dialog>
     );
 }
@@ -78,7 +75,7 @@ function PopUp(props) {
 function UserActivity(props) {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
-    const [rows, setRows] = useState([]);
+    const [activities, setActivities] = useState([]);
     const { userId } = props;
     const [isOpen, setIsOpen] = useState(false);
     const [selectedPost, setSelectedPost] = useState(null);
@@ -88,25 +85,24 @@ function UserActivity(props) {
         setIsOpen(true);
     };
 
-    const getActivity = () => {
+    const getActivities = () => {
         GetWithAuth("http://localhost:8080/users/activity/" + userId)
             .then(res => res.json())
             .then(
                 (result) => {
                     setIsLoaded(true);
-                    console.log(result);
-                    setRows(result);
+                    setActivities(result);
                 },
                 (error) => {
-                    console.log(error);
                     setIsLoaded(true);
                     setError(error);
                 }
             );
     };
+
     useEffect(() => {
-        getActivity();
-    }, []);
+        getActivities();
+    }, [userId]);
 
     return (
         <div>
@@ -120,12 +116,16 @@ function UserActivity(props) {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {rows.map((row, index) => (
-                                <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                            {Array.isArray(activities) && activities.map((activity) => (
+                                <TableRow hover role="checkbox" tabIndex={-1} key={activity.id}>
                                     <TableCell align="right">
-                                        <Button onClick={() => handleNotification(row[1])}>
-                                            {row[3] + " " + row[0] + " your post"}
-                                        </Button>
+                                        {activity.type === 'post' ? (
+                                            <Button onClick={() => handleNotification(activity.id)}>
+                                                Post: {activity.title}
+                                            </Button>
+                                        ) : (
+                                            `Comment: ${activity.text}`
+                                        )}
                                     </TableCell>
                                 </TableRow>
                             ))}

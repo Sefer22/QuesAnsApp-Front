@@ -33,7 +33,7 @@ function User() {
 
     return (
         <div style={{ display: 'flex' }}>
-            {user ? <UserAvatar avatarId={user.avatarId} /> : ""}
+            {user ? <UserAvatar avatarId={user.avatarId} userId={userId} /> : ""}
             <UserActivity userId={userId} />
         </div>
     );

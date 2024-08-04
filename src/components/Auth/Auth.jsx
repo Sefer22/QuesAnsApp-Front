@@ -3,7 +3,7 @@ import { Box, FormControl } from '@mui/material'
 import { Input } from '@mui/material'
 import { InputLabel, Button, FormHelperText } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
-import { PostWithAuth } from '../services/HttpService'
+import { PostWithoutAuth } from '../services/HttpService'
 
 function Auth() {
 
