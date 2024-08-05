@@ -1,4 +1,5 @@
-import React, { useState, useNavigate } from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Link } from "react-router-dom";
 import { CardContent, Avatar, InputAdornment, OutlinedInput } from '@mui/material';
 import { styled } from '@mui/material/styles';
@@ -36,7 +37,36 @@ function UserCommentForm(props) {
             userId: userId,
             text: text
         })
-            .then((res) => res.json())
+            .then((res) => {
+                if (!res.ok) {
+                    RefreshToken()
+                        .then((res) => {
+                            if (res.ok) {
+                                logout();
+                            }
+                            else {
+
+                                res.json()
+                            }
+                        })
+                        .then((result) => {
+                            if (result != undefined) {
+                                localStorage.setItem("tokenKey", result.accessToken);
+                                saveComment();
+                            }
+                        })
+                        .catch((err) => {
+                            console.log(err)
+                            if (err === "Unauthorized") {
+                                logout();
+                            } else if (err == null) {
+                                saveComment();
+                            }
+                        })
+
+                } else
+                    res.json()
+            })
             .catch((err) => {
                 if (err === "Unauthorized") {
                     RefreshToken()
