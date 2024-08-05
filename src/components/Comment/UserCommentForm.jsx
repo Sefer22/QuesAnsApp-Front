@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useNavigate } from 'react';
 import { Link } from "react-router-dom";
 import { CardContent, Avatar, InputAdornment, OutlinedInput } from '@mui/material';
 import { styled } from '@mui/material/styles';
@@ -19,6 +19,17 @@ function UserCommentForm(props) {
     const { userId, userName, postId, setCommentRefresh } = props;
     const [text, setText] = useState("");
 
+    let navigate = useNavigate();
+
+
+    const logout = () => {
+        localStorage.removeItem("tokenKey")
+        localStorage.removeItem("currentUser")
+        localStorage.removeItem("refreshKey")
+        localStorage.removeItem("userName")
+        navigate(0);
+    }
+
     const saveComment = () => {
         PostWithAuth("http://localhost:8080/comments", {
             postId: postId,
@@ -33,8 +44,6 @@ function UserCommentForm(props) {
                 .then((result) => {
                     localStorage.setItem("tokenKey", result.accessToken);
                     localStorage.setItem("refreshKey", result.refreshToken);
-                    localStorage.setItem("currentUser", result.userId);
-                    localStorage.setItem("userName", username)
                 })
                 .catch((err) => console.log(err))
         }
