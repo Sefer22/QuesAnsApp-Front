@@ -37,16 +37,21 @@ function UserCommentForm(props) {
             text: text
         })
             .then((res) => res.json())
-            .catch((err) => console.log(err))
-        if (err == "Unauthorized") {
-            RefreshToken()
-                .then((res) => res.json())
-                .then((result) => {
-                    localStorage.setItem("tokenKey", result.accessToken);
-                    localStorage.setItem("refreshKey", result.refreshToken);
-                })
-                .catch((err) => console.log(err))
-        }
+            .catch((err) => {
+                if (err === "Unauthorized") {
+                    RefreshToken()
+                        .then((res) => res.json())
+                        .then((result) => { localStorage.setItem("tokenKey", result.accessToken); })
+                        .catch((err) => {
+                            console.log(err)
+                            if (err === "Unauthorized") {
+                                logout();
+                            } else if (err == null) {
+                                saveComment();
+                            }
+                        })
+                }
+            })
     }
 
     const handleSubmit = () => {
