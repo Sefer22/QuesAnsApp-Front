@@ -24,7 +24,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 function PopUp(props) {
     const { isOpen, postId, setIsOpen } = props;
     const [open, setOpen] = useState(isOpen);
-    const [post, setPost] = useState(null);
+    const [post, setPost] = useState();
 
     const getPost = () => {
         GetWithAuth("http://localhost:8080/posts/" + postId)
@@ -50,9 +50,8 @@ function PopUp(props) {
     }, [isOpen]);
 
     useEffect(() => {
-        if (postId) {
-            getPost();
-        }
+        getPost();
+
     }, [postId]);
 
     return (
@@ -67,33 +66,37 @@ function PopUp(props) {
                     </Typography>
                 </Toolbar>
             </AppBar>
-            {post ? <Post likes={post.postLikes} postId={post.id} userId={post.userId} userName={post.userName} title={post.title} text={post.text} /> : "loading"}
-        </Dialog>
+            {post ? <Post likes={post.postLikes} postId={post.id} userId={post.userId} userName={post.userName} title={post.title} text={post.text}></Post> : "loading"
+            }
+        </Dialog >
     );
 }
 
 function UserActivity(props) {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
+    const [rows, setRows] = useState([]);
     const [activities, setActivities] = useState([]);
     const { userId } = props;
-    const [isOpen, setIsOpen] = useState(false);
-    const [selectedPost, setSelectedPost] = useState(null);
+    const [isOpen, setIsOpen] = useState();
+    const [selectedPost, setSelectedPost] = useState();
 
     const handleNotification = (postId) => {
         setSelectedPost(postId);
         setIsOpen(true);
     };
 
-    const getActivities = () => {
+    const getActivity = () => {
         GetWithAuth("http://localhost:8080/users/activity/" + userId)
             .then(res => res.json())
             .then(
                 (result) => {
                     setIsLoaded(true);
-                    setActivities(result);
+                    console.log(result);
+                    setRows(result)
                 },
                 (error) => {
+                    console.log(error)
                     setIsLoaded(true);
                     setError(error);
                 }
@@ -101,34 +104,32 @@ function UserActivity(props) {
     };
 
     useEffect(() => {
-        getActivities();
-    }, [userId]);
+        getActivity();
+    }, []);
 
     return (
         <div>
-            {isOpen && <PopUp isOpen={isOpen} postId={selectedPost} setIsOpen={setIsOpen} />}
+            {isOpen ? <PopUp isOpen={isOpen} postId={selectedPost} setIsOpen={setIsOpen} /> : ""}
             <Paper>
                 <TableContainer>
                     <Table stickyHeader aria-label="sticky table">
                         <TableHead>
                             <TableRow>
-                                <TableCell>User Activity</TableCell>
+                                User Activity
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {Array.isArray(activities) && activities.map((activity) => (
-                                <TableRow hover role="checkbox" tabIndex={-1} key={activity.id}>
-                                    <TableCell align="right">
-                                        {activity.type === 'post' ? (
-                                            <Button onClick={() => handleNotification(activity.id)}>
-                                                Post: {activity.title}
-                                            </Button>
-                                        ) : (
-                                            `Comment: ${activity.text}`
-                                        )}
-                                    </TableCell>
-                                </TableRow>
-                            ))}
+                            {rows.map((row) => {
+                                return (
+                                    <Button onClick={() => handleNotification(row[1])}>
+                                        <TableRow hover role="checkbox" tabIndex={-1} key={row.code} >
+                                            <TableCell align="right">
+                                                {row[3] + " " + row[0] + " your post"}
+                                            </TableCell>
+                                        </TableRow>
+                                    </Button>
+                                );
+                            })}
                         </TableBody>
                     </Table>
                 </TableContainer>
@@ -136,5 +137,6 @@ function UserActivity(props) {
         </div>
     );
 }
+
 
 export default UserActivity;
