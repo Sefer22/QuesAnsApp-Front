@@ -64,3 +64,14 @@ export const DeleteWithAuth = (url) => {
 
     return request
 }
+
+export const refreshToken = () => {
+
+    var request = fetch("http://localhost:8080/auth/refresh", {
+        method: "POST",
+        body: Json.stringify({
+            userId: localStorage.getItem("currentUser"),
+            refreshToken: localStorage.getItem("refreshKey")
+        })
+    })
+}

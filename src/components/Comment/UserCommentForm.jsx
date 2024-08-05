@@ -27,6 +27,9 @@ function UserCommentForm(props) {
         })
             .then((res) => res.json())
             .catch((err) => console.log(err))
+        if (err == "Unauthorized") {
+
+        }
     }
 
     const handleSubmit = () => {
