@@ -53,6 +53,7 @@ function UserCommentForm(props) {
                             if (result != undefined) {
                                 localStorage.setItem("tokenKey", result.accessToken);
                                 saveComment();
+                                setCommentRefresh();
                             }
                         })
                         .catch((err) => {
