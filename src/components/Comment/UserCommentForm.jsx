@@ -28,7 +28,15 @@ function UserCommentForm(props) {
             .then((res) => res.json())
             .catch((err) => console.log(err))
         if (err == "Unauthorized") {
-
+            RefreshToken()
+                .then((res) => res.json())
+                .then((result) => {
+                    localStorage.setItem("tokenKey", result.accessToken);
+                    localStorage.setItem("refreshKey", result.refreshToken);
+                    localStorage.setItem("currentUser", result.userId);
+                    localStorage.setItem("userName", username)
+                })
+                .catch((err) => console.log(err))
         }
     }
 
