@@ -29,7 +29,6 @@ const ExpandMore = styled((props) => {
 const Post = (props) => {
     const { title, text, userId, userName, postId, likes } = props;
     const [expanded, setExpanded] = useState(false);
-    const [liked, setLiked] = useState(false);
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [commentList, setCommentList] = useState([]);
@@ -39,7 +38,7 @@ const Post = (props) => {
     const [likeId, setLikeId] = useState(null);
     const [refresh, setRefresh] = useState(false);
 
-    const disabled = localStorage.getItem("currentUser") == null;
+    let disabled = localStorage.getItem("currentUser") == null ? true : false;
 
     const setCommentRefresh = () => {
         setRefresh(true);
@@ -48,6 +47,7 @@ const Post = (props) => {
     const handleExpandClick = () => {
         setExpanded(!expanded);
         refreshComments();
+        console.log(commentList);
     };
 
     const handleLike = () => {

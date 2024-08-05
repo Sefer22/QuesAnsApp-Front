@@ -76,7 +76,6 @@ function UserActivity(props) {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [rows, setRows] = useState([]);
-    const [activities, setActivities] = useState([]);
     const { userId } = props;
     const [isOpen, setIsOpen] = useState();
     const [selectedPost, setSelectedPost] = useState();
