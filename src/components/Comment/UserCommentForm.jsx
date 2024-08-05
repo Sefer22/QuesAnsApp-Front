@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { CardContent, Avatar, InputAdornment, OutlinedInput } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Button } from '@mui/material';
-import { PostWithAuth } from '../services/HttpService';
+import { PostWithAuth } from '../../services/HttpService';
 
 const StyledLink = styled(Link)(({ theme }) => ({
     textDecoration: 'none',

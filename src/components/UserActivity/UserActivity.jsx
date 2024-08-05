@@ -15,7 +15,7 @@ import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
 import Post from '../Post/Post';
-import { GetWithAuth } from '../services/HttpService';
+import { GetWithAuth } from '../../services/HttpService';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -51,7 +51,6 @@ function PopUp(props) {
 
     useEffect(() => {
         getPost();
-
     }, [postId]);
 
     return (
@@ -66,9 +65,8 @@ function PopUp(props) {
                     </Typography>
                 </Toolbar>
             </AppBar>
-            {post ? <Post likes={post.postLikes} postId={post.id} userId={post.userId} userName={post.userName} title={post.title} text={post.text}></Post> : "loading"
-            }
-        </Dialog >
+            {post ? <Post likes={post.postLikes} postId={post.id} userId={post.userId} userName={post.userName} title={post.title} text={post.text}></Post> : "loading"}
+        </Dialog>
     );
 }
 
@@ -76,9 +74,10 @@ function UserActivity(props) {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [rows, setRows] = useState([]);
+    const [activities, setActivities] = useState([]);
     const { userId } = props;
-    const [isOpen, setIsOpen] = useState();
-    const [selectedPost, setSelectedPost] = useState();
+    const [isOpen, setIsOpen] = useState(false);
+    const [selectedPost, setSelectedPost] = useState(null);
 
     const handleNotification = (postId) => {
         setSelectedPost(postId);
@@ -91,11 +90,11 @@ function UserActivity(props) {
             .then(
                 (result) => {
                     setIsLoaded(true);
-                    console.log(result);
-                    setRows(result)
+                    setActivities(result);
+                    setRows(result);
                 },
                 (error) => {
-                    console.log(error)
+                    console.log(error);
                     setIsLoaded(true);
                     setError(error);
                 }
@@ -104,31 +103,33 @@ function UserActivity(props) {
 
     useEffect(() => {
         getActivity();
-    }, []);
+    }, [userId]);
 
     return (
         <div>
-            {isOpen ? <PopUp isOpen={isOpen} postId={selectedPost} setIsOpen={setIsOpen} /> : ""}
+            {isOpen && <PopUp isOpen={isOpen} postId={selectedPost} setIsOpen={setIsOpen} />}
             <Paper>
                 <TableContainer>
                     <Table stickyHeader aria-label="sticky table">
                         <TableHead>
                             <TableRow>
-                                User Activity
+                                <TableCell>User Activity</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {rows.map((row) => {
-                                return (
-                                    <Button onClick={() => handleNotification(row[1])}>
-                                        <TableRow hover role="checkbox" tabIndex={-1} key={row.code} >
-                                            <TableCell align="right">
-                                                {row[3] + " " + row[0] + " your post"}
-                                            </TableCell>
-                                        </TableRow>
-                                    </Button>
-                                );
-                            })}
+                            {Array.isArray(activities) && activities.map((activity) => (
+                                <TableRow hover role="checkbox" tabIndex={-1} key={activity.id}>
+                                    <TableCell align="right">
+                                        {activity.type === 'post' ? (
+                                            <Button onClick={() => handleNotification(activity.id)}>
+                                                Post: {activity.title}
+                                            </Button>
+                                        ) : (
+                                            `Comment: ${activity.text}`
+                                        )}
+                                    </TableCell>
+                                </TableRow>
+                            ))}
                         </TableBody>
                     </Table>
                 </TableContainer>
@@ -136,6 +137,5 @@ function UserActivity(props) {
         </div>
     );
 }
-
 
 export default UserActivity;

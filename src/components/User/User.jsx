@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import UserAvatar from '../Avatar/UserAvatar';
 import UserActivity from '../UserActivity/UserActivity';
-import { GetWithAuth } from '../services/HttpService';
+import { GetWithAuth } from '../../services/HttpService';
 
 function User() {
-    const { userId } = useParams();
+    const { userId } = useParams(); // ensure userId is fetched from URL parameters
     const [user, setUser] = useState();
 
     const getUser = () => {
@@ -17,14 +17,14 @@ function User() {
                     setUser(result);
                 },
                 (error) => {
-                    console.log(error)
+                    console.log(error);
                 }
             )
     }
 
     useEffect(() => {
         getUser();
-    }, []);
+    }, [userId]);
 
     return (
         <div style={{ display: 'flex' }}>

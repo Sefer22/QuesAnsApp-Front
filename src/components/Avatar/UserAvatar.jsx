@@ -16,7 +16,7 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import MaterialAvatar from '@mui/material/Avatar';
-import { PutWithAuth } from '../services/HttpService';
+import { PutWithAuth } from '../../services/HttpService';
 
 function UserAvatar(props) {
     const { avatarId, userId, userName } = props;
@@ -73,7 +73,6 @@ function UserAvatar(props) {
                 </CardContent>
                 <CardActions>
                     {localStorage.getItem("currentUser") == userId ? <Button size="small" onClick={handleOpen}>Change Avatar</Button> : ""}
-                    <Button size="small" onClick={handleOpen}>Change Avatar</Button>
                 </CardActions>
             </Card>
             <Modal

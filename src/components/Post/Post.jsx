@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom';
 import { Container } from '@mui/material';
 import UserComment from '../Comment/UserComment';
 import UserCommentForm from '../Comment/UserCommentForm';
-import { PostWithAuth } from '../services/HttpService';
+import { PostWithAuth } from '../../services/HttpService';
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
